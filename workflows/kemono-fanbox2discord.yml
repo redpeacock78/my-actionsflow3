@@ -83,8 +83,6 @@ on:
       - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/83835745"
       # あろおん
       - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/10920453"
-      # vanadium
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/206952"
       # SOS
       - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/85720459"
       # TRY
