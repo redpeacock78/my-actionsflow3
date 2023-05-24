@@ -1,0 +1,28 @@
+on:
+  poll:
+    url:
+      - "https://api.tamakasu.ga/v1/javtwi/videos"
+    itemsPath: items
+    deduplicationKey: id
+    buildOutputsOnError: true
+    config:
+      skipOnError: true
+
+jobs:
+  post:
+    name: Post javtwi-api updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post
+        run: |
+          name=$(awk -F '/' '{print $NF}' <<<${{ on.poll.outputs.videoUrl }})
+          { 
+            aria2c -q -x5 ${{ on.poll.outputs.videoUrl }} -o ${name}
+            type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}"))
+            if [[ "${type}" =~ "ISO Media" ]]; then
+              curl -s \
+                -F "file1=@${name}" \
+                ${{ secrets.DISCORD_JAVTWI_VIDEO }}
+            fi
+            rm -rf "./${name}"
+          } || exit 0
