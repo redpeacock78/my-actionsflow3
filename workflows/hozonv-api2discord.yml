@@ -1,0 +1,39 @@
+on:
+  poll:
+    url:
+      - "https://api.tamakasu.ga/v1/hozonv/day"
+      - "https://api.tamakasu.ga/v1/hozonv/week"
+      - "https://api.tamakasu.ga/v1/hozonv/month"
+    itemsPath: items
+    deduplicationKey: id
+    buildOutputsOnError: true
+    config:
+      skipOnError: true
+
+jobs:
+  post:
+    name: Post hozonv-api updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post
+        run: |
+          name=$(awk -F '/' '{print $NF}' <<<${{ on.poll.outputs.videoUrl }})
+          link="${{ on.poll.outputs.tweetUrl }}"
+          { 
+            if [[ "${{ on.poll.outputs.category }}" == "24hour" ]]; then
+              webhook=${{ secrets.DISCORD_HOZONV_DAY }}
+            elif [[ "${{ on.poll.outputs.category }}" == "1week" ]]; then
+              webhook=${{ secrets.DISCORD_HOZONV_WEEK }}
+            elif [[ "${{ on.poll.outputs.category }}" == "1month" ]]; then
+              webhook=${{ secrets.DISCORD_HOZONV_MONTH }}
+            fi
+            aria2c -q -x5 ${{ on.poll.outputs.videoUrl }} -o ${name}
+            type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}"))
+            if [[ "${type}" =~ "ISO Media" ]]; then
+              curl -s \
+              -F "file1=@${name}" \
+              -F "payload_json={\"content\": \"${link}\"}" \
+              ${webhook}
+            fi
+            rm -rf "./${name}"
+          } || exit 0
