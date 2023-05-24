@@ -13,9 +13,7 @@ on:
     inputs:
       include:
         description:
-          "--include: workflow file filter, you can use glob format to filter
-          your workflows, the default value is empty value, means no filter will
-          be using"
+          "--include: workflow file filter, you can use glob format to filter your workflows, the default value is empty value, means no filter will be using"
         required: false
         default: ""
       force:
@@ -36,17 +34,11 @@ jobs:
         uses: actionsflow/actionsflow-action@v1
         with:
           args:
-            "build --include ${{ github.event.inputs.include || ''}} -f
-            ${{github.event.inputs.force=='true' && 'true' || 'false'}}
-            --verbose ${{github.event.inputs.verbose=='true' && 'true' ||
-            'false'}}"
+            "build --include ${{ github.event.inputs.include || ''}} -f ${{github.event.inputs.force=='true' && 'true' || 'false'}} --verbose ${{github.event.inputs.verbose=='true' && 'true' || 'false'}}"
           json-secrets: ${{ toJSON(secrets) }}
           json-github: ${{ toJSON(github) }}
       - name: Setup act
         uses: actionsflow/setup-act-for-actionsflow@v1
       - name: Run act
         run:
-          act --workflows ./dist/workflows --secret-file ./dist/.secrets
-          --eventpath ./dist/event.json --env-file ./dist/.env -P
-          ubuntu-latest=redpeacock78/act-environment:v1 -P
-          ubuntu-18.04=redpeacock78/act-environment:v1
+          act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=redpeacock78/act-environment:v1 -P ubuntu-18.04=redpeacock78/act-environment:v1
