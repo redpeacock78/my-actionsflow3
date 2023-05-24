@@ -1,0 +1,50 @@
+on:
+  poll:
+    url:
+      - "https://api.tamakasu.ga/v1/twicoco/24hour"
+      - "https://api.tamakasu.ga/v1/twicoco/1week"
+      - "https://api.tamakasu.ga/v1/twicoco/1month"
+      - "https://api.tamakasu.ga/v1/twicoco/realtime"
+      - "https://api.tamakasu.ga/v1/twicoco/dendou"
+      - "https://api.tamakasu.ga/v1/twicoco/history"
+    itemsPath: items
+    deduplicationKey: id
+    buildOutputsOnError: true
+    config:
+      skipOnError: true
+
+jobs:
+  post:
+    name: Post twicoco-api updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post
+        run: |
+          if [[ "${{ on.poll.outputs.videoUrl }}" != "" ]]; then
+            name=$(awk -F '/' '{print $NF}' <<<${{ on.poll.outputs.videoUrl }})
+            link="${{ on.poll.outputs.tweetUrl }}"
+            { 
+              aria2c -q -x5 ${{ on.poll.outputs.videoUrl }} -o ${name}
+              type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}"))
+              if [[ "${{ on.poll.outputs.category }}" == "24hour" ]]; then
+                  webhook=${{ secrets.DISCORD_TWICOCO_24HOUR }}
+              elif [[ "${{ on.poll.outputs.category }}" == "1week" ]]; then
+                  webhook=${{ secrets.DISCORD_TWICOCO_1WEEK }}
+              elif [[ "${{ on.poll.outputs.category }}" == "1month" ]]; then
+                  webhook=${{ secrets.DISCORD_TWICOCO_1MONTH }}
+              elif [[ "${{ on.poll.outputs.category }}" == "realtime" ]]; then
+                  webhook=${{ secrets.DISCORD_TWICOCO_REALTIME }}
+              elif [[ "${{ on.poll.outputs.category }}" == "dendou" ]]; then
+                  webhook=${{ secrets.DISCORD_TWICOCO_DENDOU }}
+              elif [[ "${{ on.poll.outputs.category }}" == "history" ]]; then
+                  webhook=${{ secrets.DISCORD_TWICOCO_HISTORY }}
+              fi
+              if [[ "${type}" =~ "ISO Media" ]]; then
+                curl -s \
+                  -F "file1=@${name}" \
+                  -F "payload_json={\"content\": \"${link}\"}" \
+                  ${webhook}
+              fi
+              rm -rf "./${name}"
+            } || exit 0
+          fi
