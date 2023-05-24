@@ -1,0 +1,78 @@
+on:
+  rss:
+    url:
+      # Art - Anime
+      - https://sukebei.nyaa.si/?page=rss&c=1_1&f=0
+      # Art - Doujinshi
+      - https://sukebei.nyaa.si/?page=rss&c=1_2&f=0
+      # Art - Games
+      - https://sukebei.nyaa.si/?page=rss&c=1_3&f=0
+      # Art - Manga
+      - https://sukebei.nyaa.si/?page=rss&c=1_4&f=0
+      # Art - Pictures
+      - https://sukebei.nyaa.si/?page=rss&c=1_5&f=0
+      # Real life - Photobooks and Pictures
+      - https://sukebei.nyaa.si/?page=rss&c=2_1&f=0
+      # Real life - Videos
+      - https://sukebei.nyaa.si/?page=rss&c=2_2&f=0
+    parserConfig:
+      customFields: {
+        item: [
+          ['nyaa:seeders', 'seeders'],
+          ['nyaa:leechers', 'leechers'],
+          ['nyaa:downloads', 'downloads'],
+          ['nyaa:infoHash', 'infoHash'],
+          ['nyaa:size', 'size'],
+          ['nyaa:categoryId', 'categoryId'],
+        ]
+      }
+    config:
+      skipOnError: true
+      format: |
+        item.title = item.title.replace(/'/g, "'\\''");
+        item.contentSnippet = item.contentSnippet.replace(/'/g, "'\\''");
+        return item;
+
+jobs:
+  post:
+    name: Post rss updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post anonfiles
+        id: anonfiles
+        run: |
+          {
+            name=${{ on.rss.outputs.infoHash }}$(awk -F '/' '{print $NF}' <<<"${{ on.rss.outputs.link }}")
+            curl -s ${{ on.rss.outputs.link }} -o "${name}" && \
+            json=$(curl -s -F "file=@${name}" https://api.anonfiles.com/upload | base64 -w 0) && \
+            echo "::set-output name=json::${json}"
+          } || exit 0
+      - name: Post
+        run: |
+          {
+            id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .data.file.metadata.id)
+            name=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .data.file.metadata.name)
+            link="https://${{ secrets.API_DOMAIN }}/anonfiles/${id}/${name}"
+            thumbnail="https://sukebei.nyaa.si/static/img/avatar/default.png"
+            if [[ "${{ on.rss.outputs.categoryId }}" == "1_1" ]]; then
+              webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_ANIME }}
+            elif [[ "${{ on.rss.outputs.categoryId }}" == "1_2" ]]; then
+              webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_DOUJINSHI }}
+            elif [[ "${{ on.rss.outputs.categoryId }}" == "1_3" ]]; then
+              webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_GAMES }}
+            elif [[ "${{ on.rss.outputs.categoryId }}" == "1_4" ]]; then
+              webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_MANGA }}
+            elif [[ "${{ on.rss.outputs.categoryId }}" == "1_5" ]]; then
+              webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_PICTURES }}
+            elif [[ "${{ on.rss.outputs.categoryId }}" == "2_1" ]]; then
+              webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_PHOTOBOOKS_AND_PICTURES }}
+            elif [[ "${{ on.rss.outputs.categoryId }}" == "2_2" ]]; then
+              webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_VIDEOS }}
+            fi
+            curl -s \
+              -X POST \
+              -H "Accept: application/json" \
+              -H "Content-Type: application/json" \
+              -d '{"embeds":[{"title":"**${{ on.rss.outputs.title }}**","description":"${{ on.rss.outputs.contentSnippet }}","url":"${{ on.rss.outputs.guid }}", "thumbnail":{"url":"'"${thumbnail}"'"}, "fields": [{"name":":seedling: seeders","value":"${{ on.rss.outputs.seeders }}","inline": true},{"name":":arrow_down_small: leechers","value":"${{ on.rss.outputs.leechers }}","inline": true},{"name":":arrow_double_down: downloads","value":"${{ on.rss.outputs.downloads }}","inline": true},{"name":":open_file_folder: size","value":"${{ on.rss.outputs.size }}","inline": true},{"name":":hash: hash","value":"${{ on.rss.outputs.infoHash }}","inline": true},{"name":":link: link","value":"'"${link}"'"}]}]}' \
+              ${webhook}
+          } || exit 0
