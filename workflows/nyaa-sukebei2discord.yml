@@ -52,7 +52,7 @@ jobs:
           {
             id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .data.file.metadata.id)
             name=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .data.file.metadata.name)
-            link="https://${{ secrets.API_DOMAIN }}/anonfiles/${id}/${name}"
+            link="https://${{ secrets.API_DOMAIN }}/v1/anonfiles/${id}/${name}"
             thumbnail="https://sukebei.nyaa.si/static/img/avatar/default.png"
             if [[ "${{ on.rss.outputs.categoryId }}" == "1_1" ]]; then
               webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_ANIME }}
