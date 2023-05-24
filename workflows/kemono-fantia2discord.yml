@@ -1,0 +1,129 @@
+on:
+  poll:
+    url:
+      # 日南(Canan)
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/83679"
+      # Lenfried
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/17213"
+      # アヘ丸
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/5679"
+      # 月乃ウサギ
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/28905"
+      # Nagisa魔物喵
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/17148"
+      # ベルゼ
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/146867"
+      # 夏目つなり(@Tsunapoe)
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/20001"
+      # ピンキーWeb/Pinkyweb
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/1445"
+      # せっくすふれんど
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/1470"
+      # 同人アキバ出版
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/4483"
+      # くろこげママ🍼
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/29318"
+      # すごい火
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/145129"
+      # 長そで
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/17096"
+      # 岡田ゆい
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/16490"
+      # いわお
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/478099"
+      # ふらう
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/2156"
+      # 八木戸マト
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/105571"
+      # デコ助
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/14553"
+      # ヘルシーマン
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/26643"
+      # あのん２億年
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/6345"
+      # りお❤️❤️❤️
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/158016"
+      # りお❤️❤️❤️
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/33044"
+      # １億年惑星
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/214727"
+      # 左門しう
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/61137"
+      # ニート社長
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/750"
+      # horosuke
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/7439"
+      # とこまやけいた
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/173796"
+      # ぱすた
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/292282"
+      # おとぎてつろう
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/52698"
+      # 調四季
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/17006"
+      # コントレンジ
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/40576"
+      # カオム
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/2065"
+      # なすな
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/14079"
+      # akaomi
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/2820"
+      # LK
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/32450"
+      # かなみルボン
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/191567"
+      # ゼツレッド
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/16749"
+      # Rindou
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/29013"
+      # かすみ＠ハイパーアクティブオナニスト
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/16365"
+      # vanadium
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/206952"
+      # 焼肉大好きあきち
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/376503"
+      # モグダン
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/6099"
+      # 嫉妬マスク
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/82773"
+    itemsPath: items
+    deduplicationKey: id
+    buildOutputsOnError: true
+    config:
+      skipOnError: true
+      format: |
+        item.title = item.title.replace(/'/g, "'\\''");
+        return item;
+jobs:
+  post:
+    name: Post kemono-api updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fix
+        id: fix
+        run: |
+          fix_title=$(echo '${{ on.poll.outputs.title }}' | sed "s/'/'\\\''/g" | sed 's/!/\\!/g;s/"/\\"/g;s/*/\\\\*/g;s/_/\\\\_/g;s/~~/\\\\~~/g')
+          sourseName=$(awk -F "/" '{print $4}' <<<"${{ on.poll.outputs.contentUrl }}")
+          userId=$(awk -F "/" '{print $6}' <<<"${{ on.poll.outputs.contentUrl }}")
+          contentId=$(awk -F "/" '{print $8}' <<<"${{ on.poll.outputs.contentUrl }}")
+          fix_url="https://${{ secrets.API_DOMAIN }}/v1/kemono/posts/${sourseName}/${userId}/${contentId}"
+          echo "::set-output name=title::${fix_title}"
+          echo "::set-output name=link::${fix_url}"
+      - name: Post
+        run: |
+          {
+            imageUrl=$(curl -s -H 'User-Agent: Discordbot' ${{ steps.fix.outputs.link }}|grep 'property="og:image"'|sed 's/^ *<meta property="og:image" content="//g;s/" \/>$//g')
+            curl -s \
+                 --retry 10 \
+                 --retry-all-errors \
+                 "${imageUrl}" > /dev/null 2>&1 || :
+            curl -s \
+                 -X POST \
+                 --retry 10 \
+                 --retry-all-errors \
+                 -H "Content-Type: application/json" \
+                 ${{ secrets.DISCORD_KEMONO_FANTIA }} \
+                 -d '{"content": "**${{ steps.fix.outputs.title }}** ${{ steps.fix.outputs.link }}"}' || :
+          } || exit 0
+          sleep 1
