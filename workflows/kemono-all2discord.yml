@@ -1,0 +1,44 @@
+on:
+  poll:
+    url:
+      - "https://api.tamakasu.ga/v1/kemono/posts"
+    itemsPath: items
+    deduplicationKey: id
+    buildOutputsOnError: true
+    config:
+      skipOnError: true
+      format: |
+        item.title = item.title.replace(/'/g, "'\\''");
+        return item;
+jobs:
+  post:
+    name: Post kemono-api updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fix
+        id: fix
+        run: |
+          fix_title=$(echo '${{ on.poll.outputs.title }}' | sed "s/'/'\\\''/g" | sed 's/!/\\!/g;s/"/\\"/g;s/*/\\\\*/g;s/_/\\\\_/g;s/~~/\\\\~~/g')
+          sourseName=$(awk -F "/" '{print $4}' <<<"${{ on.poll.outputs.contentUrl }}")
+          userId=$(awk -F "/" '{print $6}' <<<"${{ on.poll.outputs.contentUrl }}")
+          contentId=$(awk -F "/" '{print $8}' <<<"${{ on.poll.outputs.contentUrl }}")
+          fix_url="https://${{ secrets.API_DOMAIN }}/v1/kemono/posts/${sourseName}/${userId}/${contentId}"
+          echo "::set-output name=title::${fix_title}"
+          echo "::set-output name=link::${fix_url}"
+      - name: Post
+        run: |
+          {
+            imageUrl=$(curl -s -H 'User-Agent: Discordbot' ${{ steps.fix.outputs.link }}|grep 'property="og:image"'|sed 's/^ *<meta property="og:image" content="//g;s/" \/>$//g')
+            curl -s \
+                 --retry 10 \
+                 --retry-all-errors \
+                 "${imageUrl}" > /dev/null 2>&1 || :
+            curl -s \
+                 -X POST \
+                 --retry 10 \
+                 --retry-all-errors \
+                 -H "Content-Type: application/json" \
+                 ${{ secrets.DISCORD_KEMONO_ALL }} \
+                 -d '{"content": "**${{ steps.fix.outputs.title }}** ${{ steps.fix.outputs.link }}"}' || :
+          } || exit 0
+          sleep 1
