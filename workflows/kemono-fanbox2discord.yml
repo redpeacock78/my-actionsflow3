@@ -105,6 +105,12 @@ on:
       - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/79105"
       # なつみん
       - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/733737"
+      # 4UU
+      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/81635207"
+      # 夏目ベンケイ
+      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/11339300"
+      # 周防パトラ/Vtuber
+      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/92793665"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
