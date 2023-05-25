@@ -111,6 +111,8 @@ on:
       - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/11339300"
       # 周防パトラ/Vtuber
       - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/92793665"
+      # yapo
+      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/14089"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
