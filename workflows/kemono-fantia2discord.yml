@@ -89,6 +89,10 @@ on:
       - "https://api.tamakasu.ga/v1/kemono/posts/fantia/82773"
       # 隣人ちゃん@透明バニー🐰❤
       - "https://api.tamakasu.ga/v1/kemono/posts/fantia/17185"
+      # かりん👻
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/420714"
+      # バーバリアン高本
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/112298"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
