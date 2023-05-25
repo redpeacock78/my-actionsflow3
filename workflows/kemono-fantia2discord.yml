@@ -87,6 +87,8 @@ on:
       - "https://api.tamakasu.ga/v1/kemono/posts/fantia/6099"
       # 嫉妬マスク
       - "https://api.tamakasu.ga/v1/kemono/posts/fantia/82773"
+      # 隣人ちゃん@透明バニー🐰❤
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/17185"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
