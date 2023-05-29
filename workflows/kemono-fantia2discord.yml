@@ -93,6 +93,8 @@ on:
       - "https://api.tamakasu.ga/v1/kemono/posts/fantia/420714"
       # バーバリアン高本
       - "https://api.tamakasu.ga/v1/kemono/posts/fantia/112298"
+      # ゆゆこ
+      - "https://api.tamakasu.ga/v1/kemono/posts/fantia/56489"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
