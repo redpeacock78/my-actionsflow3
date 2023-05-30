@@ -32,6 +32,7 @@ jobs:
             curl -s \
                  --retry 10 \
                  --retry-all-errors \
+                 --max-time 10
                  "${imageUrl}" > /dev/null 2>&1 || :
             curl -s \
                  -X POST \
