@@ -1,0 +1,38 @@
+on:
+  poll:
+    url:
+      - "https://api.tamakasu.ga/v1/twi-dl/realtime"
+      - "https://api.tamakasu.ga/v1/twi-dl/popular"
+    itemsPath: items
+    deduplicationKey: id
+    buildOutputsOnError: true
+    config:
+      skipOnError: true
+
+jobs:
+  post:
+    name: Post twi-dl-api updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post
+        run: |
+          if [[ "${{ on.poll.outputs.videoUrl }}" != "" ]]; then
+            name=$(awk -F '/' '{print $NF}' <<<${{ on.poll.outputs.videoUrl }})
+            link="${{ on.poll.outputs.tweetUrl }}"
+            { 
+              aria2c -q -x5 ${{ on.poll.outputs.videoUrl }} -o ${name}
+              type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}"))
+              if [[ "${{ on.poll.outputs.category }}" == "realtime" ]]; then
+                webhook=${{ secrets.DISCORD_TWI_DL_REALTIME }}
+              elif [[ "${{ on.poll.outputs.category }}" == "popular" ]]; then
+                webhook=${{ secrets.DISCORD_TWI_DL_POPULAR}}
+              fi
+              if [[ "${type}" =~ "ISO Media" ]]; then
+                curl -s \
+                  -F "file1=@${name}" \
+                  -F "payload_json={\"content\": \"${link}\"}" \
+                  ${webhook}
+              fi
+              rm -rf "./${name}"
+            } || exit 0
+          fi
