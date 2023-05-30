@@ -25,6 +25,8 @@ on:
       - "https://api.tamakasu.ga/v1/kemono/posts/patreon/8762407"
       # JygreAnimation
       - "https://api.tamakasu.ga/v1/kemono/posts/patreon/68124575"
+      # shiroganesama
+      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/6456308"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
