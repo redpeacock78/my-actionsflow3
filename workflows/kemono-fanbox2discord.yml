@@ -2,117 +2,117 @@ on:
   poll:
     url:
       # Gakelzfh
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/19719823"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/19719823"
       # Rmxs3488
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/12501034"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/12501034"
       # うるりひ
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/12501034"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/12501034"
       # むち
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/65092407"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/65092407"
       # さかい
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/7140630"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/7140630"
       # fumihiko
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/2658856"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/2658856"
       # 長そで
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/14356894"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/14356894"
       # maru54
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/151892"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/151892"
       # sou-mikagami
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/267681"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/267681"
       # 猫乃またたび
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/581626"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/581626"
       # 良く煮た卵
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/20098597"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/20098597"
       # おもだか
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/374142"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/374142"
       # も
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/5835340"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/5835340"
       # くろたま
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/272079"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/272079"
       # 雲丹ピアノ
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/65330886"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/65330886"
       # れもち
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/80695562"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/80695562"
       # あっくす
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/717665"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/717665"
       # ともつか治臣
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/230418"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/230418"
       # 郁(いく)
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/5476137"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/5476137"
       # reloco
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/70637112"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/70637112"
       # アメ
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/37644945"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/37644945"
       # サーヤ
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/39908359"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/39908359"
       # またんごむ
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/2316546"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/2316546"
       # ie
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/24164271"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/24164271"
       # Cosine
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/2336"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/2336"
       # Karinかりん
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/18499718"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/18499718"
       # basuke
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/9329300"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/9329300"
       # 18マスター
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/39240212"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/39240212"
       # ミモネル
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/112519"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/112519"
       # おきょう
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/18960704"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/18960704"
       # エビ王
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/63828616"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/63828616"
       # おおおおありくい
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/35801"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/35801"
       # ulsyan
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/41183137"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/41183137"
       # 水聖のあ
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/79095966"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/79095966"
       # TERテア
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/206708"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/206708"
       # susu
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/344729"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/344729"
       # cham22
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/16456081"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/16456081"
       # ゼツレッド
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/2587756"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/2587756"
       # mamimi
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/17151277"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/17151277"
       # 寿司二郎 SushiJjiro
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/83835745"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/83835745"
       # あろおん
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/10920453"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/10920453"
       # SOS
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/85720459"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/85720459"
       # TRY
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/1340203"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/1340203"
       # a🔞
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/79145351"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/79145351"
       # tsurugi33
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/4994"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/4994"
       # あまなぎ八雲
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/82437945"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/82437945"
       # 一本杭
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/177996"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/177996"
       # AoChoku
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/15860216"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/15860216"
       # 平沢＠ZenHirasawa
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/884634"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/884634"
       # リコシェット
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/66409778"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/66409778"
       # butachang
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/79105"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/79105"
       # なつみん
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/733737"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/733737"
       # 4UU
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/81635207"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/81635207"
       # 夏目ベンケイ
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/11339300"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/11339300"
       # 周防パトラ/Vtuber
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/92793665"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/92793665"
       # yapo
-      - "https://api.tamakasu.ga/v1/kemono/posts/fanbox/14089"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/14089"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

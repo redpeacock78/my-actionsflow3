@@ -2,31 +2,31 @@ on:
   poll:
     url:
       # haneame
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/4626321"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/4626321"
       # Ceo_neet
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/13200612"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/13200612"
       # Punpunn
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/4113620"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/4113620"
       # 牛と鶏MMD
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/87993999"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/87993999"
       # easonx
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/9961216"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/9961216"
       # Oniilus
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/4890821"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/4890821"
       # Sakimichan
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/371321"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/371321"
       # Kuuko_w
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/6889522"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/6889522"
       # LK00
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/14671789"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/14671789"
       # TRYLSC
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/641867"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/641867"
       # nlch
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/8762407"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/8762407"
       # JygreAnimation
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/68124575"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/68124575"
       # shiroganesama
-      - "https://api.tamakasu.ga/v1/kemono/posts/patreon/6456308"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/6456308"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

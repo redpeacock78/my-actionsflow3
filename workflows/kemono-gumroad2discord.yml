@@ -2,9 +2,9 @@ on:
   poll:
     url:
       # LK
-      - "https://api.tamakasu.ga/v1/kemono/posts/gumroad/9512949530480"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/gumroad/9512949530480"
       # TRYLSC
-      - "https://api.tamakasu.ga/v1/kemono/posts/gumroad/trylsc"
+      - "https://api.redpeacock78.ml/v1/kemono/posts/gumroad/trylsc"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
