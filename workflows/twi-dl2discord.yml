@@ -1,8 +1,8 @@
 on:
   poll:
     url:
-      - "https://api.tamakasu.ga/v1/twi-dl/realtime"
-      - "https://api.tamakasu.ga/v1/twi-dl/popular"
+      - "https://api.redpeacock78.ml/v1/twi-dl/realtime"
+      - "https://api.redpeacock78.ml/v1/twi-dl/popular"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

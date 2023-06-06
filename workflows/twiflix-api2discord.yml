@@ -1,8 +1,8 @@
 on:
   poll:
     url:
-      - "https://api.tamakasu.ga/v1/twiflix/popular"
-      - "https://api.tamakasu.ga/v1/twiflix/recent"
+      - "https://api.redpeacock78.ml/v1/twiflix/popular"
+      - "https://api.redpeacock78.ml/v1/twiflix/recent"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

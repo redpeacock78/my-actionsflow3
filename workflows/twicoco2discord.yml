@@ -1,12 +1,12 @@
 on:
   poll:
     url:
-      - "https://api.tamakasu.ga/v1/twicoco/24hour"
-      - "https://api.tamakasu.ga/v1/twicoco/1week"
-      - "https://api.tamakasu.ga/v1/twicoco/1month"
-      - "https://api.tamakasu.ga/v1/twicoco/realtime"
-      - "https://api.tamakasu.ga/v1/twicoco/dendou"
-      - "https://api.tamakasu.ga/v1/twicoco/history"
+      - "https://api.redpeacock78.ml/v1/twicoco/24hour"
+      - "https://api.redpeacock78.ml/v1/twicoco/1week"
+      - "https://api.redpeacock78.ml/v1/twicoco/1month"
+      - "https://api.redpeacock78.ml/v1/twicoco/realtime"
+      - "https://api.redpeacock78.ml/v1/twicoco/dendou"
+      - "https://api.redpeacock78.ml/v1/twicoco/history"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

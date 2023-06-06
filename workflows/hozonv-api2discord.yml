@@ -1,9 +1,9 @@
 on:
   poll:
     url:
-      - "https://api.tamakasu.ga/v1/hozonv/day"
-      - "https://api.tamakasu.ga/v1/hozonv/week"
-      - "https://api.tamakasu.ga/v1/hozonv/month"
+      - "https://api.redpeacock78.ml/v1/hozonv/day"
+      - "https://api.redpeacock78.ml/v1/hozonv/week"
+      - "https://api.redpeacock78.ml/v1/hozonv/month"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
