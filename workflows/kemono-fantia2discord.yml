@@ -97,6 +97,14 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/56489"
       # 山田太郎
       - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/56142"
+      # なわけな
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/10720"
+      # ろっぴー
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/25268"
+      # ky.
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/12172"
+      # 林檎蜜紀
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/13265"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
