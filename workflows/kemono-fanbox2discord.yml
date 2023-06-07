@@ -113,6 +113,10 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/92793665"
       # yapo
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/14089"
+      # miga
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/896593"
+      # 乃々木
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/28934049"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

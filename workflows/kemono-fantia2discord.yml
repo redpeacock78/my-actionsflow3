@@ -95,6 +95,8 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/112298"
       # ゆゆこ
       - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/56489"
+      # 山田太郎
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/56142"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
