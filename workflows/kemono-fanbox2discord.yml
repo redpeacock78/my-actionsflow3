@@ -117,6 +117,10 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/896593"
       # 乃々木
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/28934049"
+      # 澤田コウ🦔
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/87689886"
+      # ぽるせりん
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/15209643"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
