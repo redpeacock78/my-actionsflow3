@@ -1,0 +1,88 @@
+on:
+  poll:
+    url:
+      # 新着
+      - "https://api.koe-koe.tk/v1/newly?order=asc"
+      # 注目(総合)
+      - "https://api.koe-koe.tk/v1/forcus/general?order=asc"
+      # 注目(女性)
+      - "https://api.koe-koe.tk/v1/forcus/female?order=asc"
+      # 注目(男性)
+      - "https://api.koe-koe.tk/v1/forcus/male?order=asc"
+      # 注目(カップル)
+      - "https://api.koe-koe.tk/v1/forcus/couple?order=asc"
+      # ジャンル(女性・すべて)
+      - "https://api.koe-koe.tk/v1/genre/female/all?order=asc"
+      # ジャンル(男性・すべて)
+      - "https://api.koe-koe.tk/v1/genre/male/all?order=asc"
+      # ジャンル(カップル・すべて)
+      - "https://api.koe-koe.tk/v1/genre/couple/all?order=asc"
+    itemsPath: items
+    deduplicationKey: id
+    buildOutputsOnError: true
+    config:
+      skipOnError: true
+
+jobs:
+  post:
+    name: Post koe-koe updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post
+        run: |
+          name=$(awk -F '/' '{print $NF}' <<<${{ on.poll.outputs.file_link }})
+          { 
+            aria2c -q -x5 ${{ on.poll.outputs.file_link }} -o ${name}
+            timestamp=$(TZ=UTC date "+%Y-%m-%dT%H:%M:%S.%3NZ")
+            type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}"))
+            if [[ "${type}" =~ "Audio" ]]; then
+              if [[ "${{ on.poll.outputs.category }}" =~ "newly" ]]; then
+                category=$(awk -F ':' '{if($NF == "female"){print "女性"}else if($NF == "male"){print "男性"}else{print "カップル"}}' <<<${{ on.poll.outputs.category }})
+                curl -s \
+                  -F "file1=@${name}" \
+                  -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板/${category}\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
+                  ${{ secrets.DISCORD_KOEKOE_NEWLY }}
+              elif [[ "${{ on.poll.outputs.category }}" =~ "forcus" ]]; then
+                if [[ "${{ on.poll.outputs.category }}" =~ "forcus:general" ]]; then
+                  category=$(awk -F ':' '{if($NF == "female"){print "女性"}else if($NF == "male"){print "男性"}else{print "カップル"}}' <<<${{ on.poll.outputs.category }})
+                  curl -s \
+                    -F "file1=@${name}" \
+                    -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板/${category}\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
+                    ${{ secrets.DISCORD_KOEKOE_FORCUS_GENERAL }}
+                elif [[ "${{ on.poll.outputs.category }}" == "forcus:female" ]]; then
+                  curl -s \
+                    -F "file1=@${name}" \
+                    -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
+                    ${{ secrets.DISCORD_KOEKOE_FORCUS_FEMALE }}
+                elif [[ "${{ on.poll.outputs.category }}" == "forcus:male" ]]; then
+                  curl -s \
+                    -F "file1=@${name}" \
+                    -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
+                    ${{ secrets.DISCORD_KOEKOE_FORCUS_MALE }}
+                else
+                  curl -s \
+                    -F "file1=@${name}" \
+                    -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
+                    ${{ secrets.DISCORD_KOEKOE_FORCUS_COUPLE }}
+                fi
+              elif [[ "${{ on.poll.outputs.category }}" =~ "genre" ]]; then
+                if [[ "${{ on.poll.outputs.category }}" =~ "female" ]]; then
+                  curl -s \
+                    -F "file1=@${name}" \
+                    -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
+                    ${{ secrets.DISCORD_KOEKOE_GENRE_FEMALE }}
+                elif [[ "${{ on.poll.outputs.category }}" =~ "male" ]]; then
+                  curl -s \
+                    -F "file1=@${name}" \
+                    -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
+                    ${{ secrets.DISCORD_KOEKOE_GENRE_MALE }}
+                else
+                  curl -s \
+                    -F "file1=@${name}" \
+                    -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
+                    ${{ secrets.DISCORD_KOEKOE_GENRE_COUPLE }}
+                fi
+              fi
+            fi
+          } || exit 0
+          sleep 1
