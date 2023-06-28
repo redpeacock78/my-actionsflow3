@@ -121,6 +121,12 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/87689886"
       # ぽるせりん
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/15209643"
+      # horosuke
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/641955"
+      # たぐ@Skeb募集中なぷいこね勢
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/39814580"
+      # 根田啓史
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/208166"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
