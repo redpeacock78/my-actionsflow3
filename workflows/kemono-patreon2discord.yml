@@ -27,6 +27,8 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/68124575"
       # shiroganesama
       - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/6456308"
+      # アヘ丸
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/7842696"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
