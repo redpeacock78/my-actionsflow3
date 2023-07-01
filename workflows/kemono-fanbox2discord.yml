@@ -127,6 +127,8 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/39814580"
       # 根田啓史
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/208166"
+      # 有都あらゆる
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/3733098"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
