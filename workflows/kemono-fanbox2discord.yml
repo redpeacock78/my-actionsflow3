@@ -129,6 +129,8 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/208166"
       # 有都あらゆる
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/3733098"
+      # 高遠くろ助
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/596129"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

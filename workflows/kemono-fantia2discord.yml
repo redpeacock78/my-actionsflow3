@@ -107,6 +107,8 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/13265"
       # 白虎ルナ🐯えもえちプロダクション🐯🌙
       - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/473831"
+      # 高遠くろ助
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/5306"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

@@ -29,6 +29,8 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/6456308"
       # アヘ丸
       - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/7842696"
+      # k8on
+      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/59916205"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
