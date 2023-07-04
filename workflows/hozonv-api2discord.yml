@@ -32,7 +32,7 @@ jobs:
             if [[ "${type}" =~ "ISO Media" ]]; then
               curl -s \
               -F "file1=@${name}" \
-              -F "payload_json={\"content\": \"${link/twitter.com/fxtwitter.com}\"}" \
+              -F "payload_json={\"content\": \"${link/twitter/vxtwitter}\"}" \
               ${webhook}
             fi
             rm -rf "./${name}"
