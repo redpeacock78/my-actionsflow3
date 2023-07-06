@@ -133,6 +133,8 @@ on:
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/596129"
       # ジャッキー
       - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/826428"
+      # KIYO
+      - "https://api.redpeacock78.ml/v1/kemono/posts/fanbox/16208698"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
