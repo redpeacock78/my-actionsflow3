@@ -1,8 +1,8 @@
 on:
   poll:
     url:
-      - "https://api.redpeacock78.ml/v1/twiflix/popular"
-      - "https://api.redpeacock78.ml/v1/twiflix/recent"
+      - "https://my-api.redpeacock78.com/v1/twiflix/popular"
+      - "https://my-api.redpeacock78.com/v1/twiflix/recent"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

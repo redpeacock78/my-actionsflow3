@@ -2,35 +2,35 @@ on:
   poll:
     url:
       # haneame
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/4626321"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/4626321"
       # Ceo_neet
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/13200612"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/13200612"
       # Punpunn
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/4113620"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/4113620"
       # 牛と鶏MMD
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/87993999"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/87993999"
       # easonx
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/9961216"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/9961216"
       # Oniilus
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/4890821"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/4890821"
       # Sakimichan
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/371321"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/371321"
       # Kuuko_w
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/6889522"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/6889522"
       # LK00
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/14671789"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/14671789"
       # TRYLSC
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/641867"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/641867"
       # nlch
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/8762407"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/8762407"
       # JygreAnimation
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/68124575"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/68124575"
       # shiroganesama
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/6456308"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/6456308"
       # アヘ丸
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/7842696"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/7842696"
       # k8on
-      - "https://api.redpeacock78.ml/v1/kemono/posts/patreon/59916205"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/59916205"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

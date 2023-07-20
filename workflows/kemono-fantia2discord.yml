@@ -2,113 +2,113 @@ on:
   poll:
     url:
       # 日南(Canan)
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/83679"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/83679"
       # Lenfried
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/17213"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/17213"
       # アヘ丸
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/5679"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/5679"
       # 月乃ウサギ
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/28905"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/28905"
       # Nagisa魔物喵
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/17148"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/17148"
       # ベルゼ
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/146867"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/146867"
       # 夏目つなり(@Tsunapoe)
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/20001"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/20001"
       # ピンキーWeb/Pinkyweb
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/1445"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/1445"
       # せっくすふれんど
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/1470"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/1470"
       # 同人アキバ出版
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/4483"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/4483"
       # くろこげママ🍼
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/29318"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/29318"
       # すごい火
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/145129"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/145129"
       # 長そで
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/17096"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/17096"
       # 岡田ゆい
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/16490"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/16490"
       # いわお
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/478099"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/478099"
       # ふらう
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/2156"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/2156"
       # 八木戸マト
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/105571"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/105571"
       # デコ助
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/14553"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/14553"
       # ヘルシーマン
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/26643"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/26643"
       # あのん２億年
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/6345"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/6345"
       # りお❤️❤️❤️
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/158016"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/158016"
       # りお❤️❤️❤️
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/33044"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/33044"
       # １億年惑星
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/214727"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/214727"
       # 左門しう
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/61137"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/61137"
       # ニート社長
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/750"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/750"
       # horosuke
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/7439"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/7439"
       # とこまやけいた
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/173796"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/173796"
       # ぱすた
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/292282"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/292282"
       # おとぎてつろう
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/52698"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/52698"
       # 調四季
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/17006"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/17006"
       # コントレンジ
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/40576"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/40576"
       # カオム
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/2065"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/2065"
       # なすな
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/14079"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/14079"
       # akaomi
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/2820"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/2820"
       # LK
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/32450"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/32450"
       # かなみルボン
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/191567"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/191567"
       # ゼツレッド
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/16749"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/16749"
       # Rindou
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/29013"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/29013"
       # かすみ＠ハイパーアクティブオナニスト
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/16365"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/16365"
       # vanadium
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/206952"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/206952"
       # 焼肉大好きあきち
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/376503"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/376503"
       # モグダン
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/6099"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/6099"
       # 嫉妬マスク
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/82773"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/82773"
       # 隣人ちゃん@透明バニー🐰❤
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/17185"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/17185"
       # かりん👻
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/420714"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/420714"
       # バーバリアン高本
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/112298"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/112298"
       # ゆゆこ
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/56489"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/56489"
       # 山田太郎
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/56142"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/56142"
       # なわけな
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/10720"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/10720"
       # ろっぴー
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/25268"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/25268"
       # ky.
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/12172"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/12172"
       # 林檎蜜紀
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/13265"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/13265"
       # 白虎ルナ🐯えもえちプロダクション🐯🌙
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/473831"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/473831"
       # 高遠くろ助
-      - "https://api.redpeacock78.ml/v1/kemono/posts/fantia/5306"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/5306"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

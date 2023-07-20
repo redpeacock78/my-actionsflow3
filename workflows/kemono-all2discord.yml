@@ -1,7 +1,7 @@
 on:
   poll:
     url:
-      - "https://api.redpeacock78.ml/v1/kemono/posts"
+      - "https://my-api.redpeacock78.com/v1/kemono/posts"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

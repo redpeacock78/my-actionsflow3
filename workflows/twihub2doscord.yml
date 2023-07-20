@@ -1,11 +1,11 @@
 on:
   poll:
     url:
-      - "https://api.redpeacock78.ml/v1/twihub/24hour"
-      - "https://api.redpeacock78.ml/v1/twihub/3days"
-      - "https://api.redpeacock78.ml/v1/twihub/1week"
-      - "https://api.redpeacock78.ml/v1/twihub/dendou"
-      - "https://api.redpeacock78.ml/v1/twihub/history"
+      - "https://my-api.redpeacock78.com/v1/twihub/24hour"
+      - "https://my-api.redpeacock78.com/v1/twihub/3days"
+      - "https://my-api.redpeacock78.com/v1/twihub/1week"
+      - "https://my-api.redpeacock78.com/v1/twihub/dendou"
+      - "https://my-api.redpeacock78.com/v1/twihub/history"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
