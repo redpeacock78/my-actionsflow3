@@ -135,6 +135,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/826428"
       # KIYO
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/16208698"
+      # giga
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/28238559"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
