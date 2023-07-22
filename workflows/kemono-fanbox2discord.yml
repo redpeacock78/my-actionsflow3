@@ -137,6 +137,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/16208698"
       # giga
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/28238559"
+      # みすりるリム
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/17239664"
+      # mamaloni
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/36226075"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

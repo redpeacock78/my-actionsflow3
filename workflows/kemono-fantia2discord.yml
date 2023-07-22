@@ -109,6 +109,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/473831"
       # 高遠くろ助
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/5306"
+      # C-Low
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/1736"
+      # 牛虎たつみ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/76218"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
