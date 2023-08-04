@@ -153,6 +153,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/50993448"
       # ろーち
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/53657640"
+      # ポロロッカ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/1463539"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

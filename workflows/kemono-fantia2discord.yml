@@ -115,10 +115,12 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/76218"
       # 伊島ユウ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/100663"
-      #2=8
+      # 2=8
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/2102"
-      #あちゃ
+      # あちゃ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/119451"
+      # にぎりうさぎ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/25798"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
