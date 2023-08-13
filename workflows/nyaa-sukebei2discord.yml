@@ -54,7 +54,7 @@ jobs:
           {
             cdn_id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .attachments[0].url | awk -F '/' '{print $5}')
             id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .attachments[0].url | awk -F '/' '{print $6}')
-            name=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | .attachments[0].filename)
+            name=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .attachments[0].filename)
             link="https://${{ secrets.API_DOMAIN }}/v1/proxy/discord/${cdn_id}/${id}/${name}"
             thumbnail="https://sukebei.nyaa.si/static/img/avatar/default.png"
             if [[ "${{ on.rss.outputs.categoryId }}" == "1_1" ]]; then
