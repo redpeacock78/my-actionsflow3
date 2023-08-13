@@ -42,17 +42,20 @@ jobs:
         id: anonfiles
         run: |
           {
+            post_urls=("${{ secrets.C1_URL }}" "${{ secrets.C2_URL }}" "${{ secrets.C3_URL }}")
+            post_url="${post_urls[$(($RANDOM % ${#post_urls[*]}))]}"
             name=${{ on.rss.outputs.infoHash }}$(awk -F '/' '{print $NF}' <<<"${{ on.rss.outputs.link }}")
             curl -s ${{ on.rss.outputs.link }} -o "${name}" && \
-            json=$(curl -s -F "file=@${name}" https://api.anonfiles.com/upload | base64 -w 0) && \
+            json=$(curl -s -X POST -H 'Content-Type: multipart/form-data' -F "file=@${name}" "${post_url}" | base64 -w 0) && \
             echo "::set-output name=json::${json}"
           } || exit 0
       - name: Post
         run: |
           {
-            id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .data.file.metadata.id)
-            name=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .data.file.metadata.name)
-            link="https://${{ secrets.API_DOMAIN }}/v1/anonfiles/${id}/${name}"
+            cdn_id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .attachments[0].url | awk -F '/' '{print $5}')
+            id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .attachments[0].url | awk -F '/' '{print $6}')
+            name=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | .attachments[0].filename)
+            link="https://${{ secrets.API_DOMAIN }}/v1/proxy/discord/${cdn_id}/${id}/${name}"
             thumbnail="https://sukebei.nyaa.si/static/img/avatar/default.png"
             if [[ "${{ on.rss.outputs.categoryId }}" == "1_1" ]]; then
               webhook=${{ secrets.DISCORD_NYAA_SUKEBEI_ANIME }}
