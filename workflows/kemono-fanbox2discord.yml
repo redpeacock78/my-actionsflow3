@@ -155,6 +155,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/53657640"
       # ポロロッカ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/1463539"
+      # 🔞絵描き外国人
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/87004152"
+      # 真園あきら
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/32254838"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true

@@ -121,6 +121,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/119451"
       # にぎりうさぎ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/25798"
+      # ただたか
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/26757"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
