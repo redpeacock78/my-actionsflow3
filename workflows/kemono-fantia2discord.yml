@@ -123,6 +123,18 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/25798"
       # ただたか
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/26757"
+      # にゃん子
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/224711"
+      # にゃん子
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/415331"
+      # しゃな&弥生
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/102140"
+      # フリム
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/5644"
+      # らむだ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/101032"
+      # 青ばなな
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/6173"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
