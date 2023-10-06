@@ -79,6 +79,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/87004152"
       # 真園あきら
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/32254838"
+      # りんご犬
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/2396"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
