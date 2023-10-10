@@ -5,6 +5,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/68051251"
       # べよん
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/1090288"
+      # 消すぐあ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/72050055"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
