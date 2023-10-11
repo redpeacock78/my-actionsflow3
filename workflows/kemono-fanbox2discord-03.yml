@@ -7,6 +7,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/1090288"
       # 消すぐあ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/72050055"
+      # Bow
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/50452"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
