@@ -31,6 +31,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/7842696"
       # k8on
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/59916205"
+      # OSNET
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/16538141"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
