@@ -137,6 +137,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/6173"
       # OSNET
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/39741"
+      # 蛇腹トルネード
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/16538"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
