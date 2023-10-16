@@ -9,6 +9,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/72050055"
       # Bow
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/50452"
+      # えっちなサナダくん
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/35062437"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
