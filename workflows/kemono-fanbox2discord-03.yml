@@ -13,6 +13,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/35062437"
       # トリヤロウ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/50731293"
+      # 譲葉
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/9407"
+      # ぷ玉
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/57068482"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
