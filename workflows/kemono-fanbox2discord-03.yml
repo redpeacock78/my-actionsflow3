@@ -17,6 +17,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/9407"
       # ぷ玉
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/57068482"
+      # chickeiii
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/9752301"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
