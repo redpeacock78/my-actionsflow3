@@ -19,6 +19,22 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/57068482"
       # chickeiii
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/9752301"
+      # 猫作
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/14878102"
+      # ちーちち
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/60960573"
+      # カケタイナー　
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/30435589"
+      # じんタロウ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/78013438"
+      # 朧月
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/6713"
+      # DaRoon5
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/52640474"
+      # しろのぶらうす
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/72966337"
+      # ぱすた
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/62211057"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
