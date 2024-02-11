@@ -39,6 +39,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/15076523"
       # ピリオドÖ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/27865046"
+      # 信じろ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/1305253"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
