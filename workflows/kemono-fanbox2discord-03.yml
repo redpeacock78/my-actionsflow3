@@ -35,6 +35,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/72966337"
       # ぱすた
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/62211057"
+      # 貝
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/15076523"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
