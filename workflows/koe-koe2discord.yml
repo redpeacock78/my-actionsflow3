@@ -2,21 +2,21 @@ on:
   poll:
     url:
       # 新着
-      - "https://api.koe-koe.tk/v1/newly?order=asc"
+      - "https://koe-koe-api.shwt.pp.ua/v1/newly?order=asc"
       # 注目(総合)
-      - "https://api.koe-koe.tk/v1/forcus/general?order=asc"
+      - "https://koe-koe-api.shwt.pp.ua/v1/forcus/general?order=asc"
       # 注目(女性)
-      - "https://api.koe-koe.tk/v1/forcus/female?order=asc"
+      - "https://koe-koe-api.shwt.pp.ua/v1/forcus/female?order=asc"
       # 注目(男性)
-      - "https://api.koe-koe.tk/v1/forcus/male?order=asc"
+      - "https://koe-koe-api.shwt.pp.ua/v1/forcus/male?order=asc"
       # 注目(カップル)
-      - "https://api.koe-koe.tk/v1/forcus/couple?order=asc"
+      - "https://koe-koe-api.shwt.pp.ua/v1/forcus/couple?order=asc"
       # ジャンル(女性・すべて)
-      - "https://api.koe-koe.tk/v1/genre/female/all?order=asc"
+      - "https://koe-koe-api.shwt.pp.ua/v1/genre/female/all?order=asc"
       # ジャンル(男性・すべて)
-      - "https://api.koe-koe.tk/v1/genre/male/all?order=asc"
+      - "https://koe-koe-api.shwt.pp.ua/v1/genre/male/all?order=asc"
       # ジャンル(カップル・すべて)
-      - "https://api.koe-koe.tk/v1/genre/couple/all?order=asc"
+      - "https://koe-koe-api.shwt.pp.ua/v1/genre/couple/all?order=asc"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
