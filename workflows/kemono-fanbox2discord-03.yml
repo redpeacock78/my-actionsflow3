@@ -43,6 +43,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/1305253"
       # cancer
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/681032"
+      # かぜなみ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/91993794"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
