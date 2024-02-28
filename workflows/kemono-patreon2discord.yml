@@ -33,6 +33,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/59916205"
       # OSNET
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/16538141"
+      # PanPiano
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/14045281"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
