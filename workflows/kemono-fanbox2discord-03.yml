@@ -45,6 +45,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/681032"
       # かぜなみ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/91993794"
+      # なわけな
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/32254275"
+      # 篠崎 うい
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/16890775"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
