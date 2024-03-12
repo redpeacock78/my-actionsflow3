@@ -51,6 +51,12 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/16890775"
       # musouduki
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/163246"
+      # ふらう
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/18340266"
+      # もみさん
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/8980751"
+      # 白土
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/30563163"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
