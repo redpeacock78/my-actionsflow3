@@ -57,6 +57,14 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/8980751"
       # 白土
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/30563163"
+      # さ抜き
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/9888246"
+      # 中瀬古
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/886486"
+      # YoRoZ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/16871271"
+      # セナ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/62022223"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
