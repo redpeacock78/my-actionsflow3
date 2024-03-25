@@ -65,6 +65,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/16871271"
       # セナ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/62022223"
+      # コスプレイヤー　ヒップ127cmデカ尻みーしゃのFANBOX
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/59329365"
+      # PoPer
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/17312525"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
