@@ -9,8 +9,6 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/2156"
       # コスプレテイルズ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/19729"
-      # コスプレイヤー　ヒップ127cmデカ尻みーしゃのFANBOX
-      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/59329365"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
