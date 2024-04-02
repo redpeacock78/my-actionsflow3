@@ -77,6 +77,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/8397306"
       # 柵野14
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/24328727"
+      # 矢野トシノリ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/251459"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
