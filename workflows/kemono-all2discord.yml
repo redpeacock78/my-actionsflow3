@@ -28,7 +28,7 @@ jobs:
       - name: Post
         run: |
           {
-            imageUrl=$(curl -s -H 'User-Agent: Discordbot' ${{ steps.fix.outputs.link }}|grep 'property="og:image"'|sed 's/^ *<meta property="og:image" content="//g;s/" \/>$//g')
+            imageUrl=$(curl -s --retry 10 --retry-all-errors -H 'User-Agent: Discordbot' ${{ steps.fix.outputs.link }}|grep 'property="og:image"'|sed 's/^ *<meta property="og:image" content="//g;s/" \/>$//g')
             curl -s \
                  --retry 10 \
                  --retry-all-errors \
