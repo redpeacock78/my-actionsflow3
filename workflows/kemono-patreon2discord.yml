@@ -37,6 +37,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/14045281"
       # PoPer
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/57431512"
+      # cyberboi
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/58339765"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
