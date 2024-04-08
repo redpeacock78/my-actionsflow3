@@ -11,6 +11,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/2218767"
       # 骨彦
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/11511609"
+      # ん゛
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/14660698"
+      # ふぇすた@coro
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/64386102"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
