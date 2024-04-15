@@ -17,6 +17,18 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/64386102"
       # イット
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/13211432"
+      # さかいワカ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/59136"
+      # すわ猫
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/31855616"
+      # 十五夜
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/1722837"
+      # 送り萬都
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/639067"
+      # 38
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/30570055"
+      # かっさい
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/73318055"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
