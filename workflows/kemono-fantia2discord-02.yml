@@ -9,6 +9,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/2156"
       # コスプレテイルズ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/19729"
+      # 送り萬都
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fantia/8037"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
