@@ -39,6 +39,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/57431512"
       # cyberboi
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/58339765"
+      # shengtian
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/45409739"
+      # shengtian000
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/98830936"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
