@@ -29,6 +29,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/30570055"
       # かっさい
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/73318055"
+      # こびんびん
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/18641488"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
