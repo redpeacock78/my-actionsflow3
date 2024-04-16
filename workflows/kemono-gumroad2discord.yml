@@ -5,6 +5,8 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/gumroad/9512949530480"
       # TRYLSC
       - "https://my-api.redpeacock78.com/v1/kemono/posts/gumroad/trylsc"
+      # shengtian
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/gumroad/4247780150541"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
