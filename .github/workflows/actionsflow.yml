@@ -26,7 +26,7 @@ on:
         default: "false"
 jobs:
   run:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     name: Run
     steps:
       - uses: actions/checkout@v2
