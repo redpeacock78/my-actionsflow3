@@ -11,7 +11,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Checkout Branch
-        run: git checkout main
+        run: git checkout master
       - name: Configure CI Git User
         run: |
           git config user.name github-actions[bot]
