@@ -45,7 +45,7 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/10316984"
       # E10
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/6849"
-      # た事
+      # たじ
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/19393"
     itemsPath: items
     deduplicationKey: id
