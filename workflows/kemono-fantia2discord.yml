@@ -158,7 +158,7 @@ jobs:
           fix_title=$(echo '${{ on.poll.outputs.title }}' | sed "s/'/'\\\''/g" | sed 's/!/\\!/g;s/"/\\"/g;s/*/\\\\*/g;s/_/\\\\_/g;s/~~/\\\\~~/g')
           sourseName=$(awk -F "/" '{print $4}' <<<"${{ on.poll.outputs.contentUrl }}")
           userId=$(awk -F "/" '{print $6}' <<<"${{ on.poll.outputs.contentUrl }}")
-          contentId=$(awk -F "/" '{print $7}' <<<"${{ on.poll.outputs.contentUrl }}")
+          contentId=$(awk -F "/" '{print $8}' <<<"${{ on.poll.outputs.contentUrl }}")
           fix_url="https://${{ secrets.API_DOMAIN }}/v1/kemono/posts/${sourseName}/${userId}/${contentId}"
           echo "::set-output name=title::${fix_title}"
           echo "::set-output name=link::${fix_url}"
