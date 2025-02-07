@@ -35,6 +35,14 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/9166370"
       # からから卵
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/66428609"
+      # うらーー
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/59846855"
+      # がまれんじ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/71184856"
+      # かいせんどんぶり
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/30110450"
+      # びよびよ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/10316984"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
