@@ -32,8 +32,10 @@ jobs:
           userId=$(awk -F "/" '{print $6}' <<<"${{ on.poll.outputs.contentUrl }}")
           contentId=$(awk -F "/" '{print $8}' <<<"${{ on.poll.outputs.contentUrl }}")
           fix_url="https://${{ secrets.API_DOMAIN }}/v1/kemono/posts/${sourseName}/${userId}/${contentId}"
+          oembed_url="https://${{ secrets.API_DOMAIN }}/v1/kemono/posts/${sourseName}/${userId}/${contentId}/oembed.json"
           echo "::set-output name=title::${fix_title}"
           echo "::set-output name=link::${fix_url}"
+          echo "::set-output name=oembed::${oembed_url}"
       - name: Post
         run: |
           {
@@ -47,6 +49,10 @@ jobs:
                  --retry-all-errors \
                  -H 'User-Agent: Discordbot' \
                  ${{ steps.fix.outputs.link }} > /dev/null 2>&1 || :
+            curl -s \
+                 --retry 10 \
+                 --retry-all-errors \
+                 ${{ steps.fix.outputs.oembed }} > /dev/null 2>&1 || :
             curl -s \
                  -X POST \
                  --retry 10 \
