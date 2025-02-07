@@ -39,6 +39,11 @@ jobs:
             #      --retry-all-errors \
             #      "${imageUrl}" > /dev/null 2>&1 || :
             curl -s \
+                 --retry 10 \
+                 --retry-all-errors \
+                 -H 'User-Agent: Discordbot' \
+                 ${{ steps.fix.outputs.link }} > /dev/null 2>&1 || :
+            curl -s \
                  -X POST \
                  --retry 10 \
                  --retry-all-errors \
