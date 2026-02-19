@@ -28,6 +28,14 @@ jobs:
   run:
     runs-on: ubuntu-22.04
     name: Run
+    services:
+      docker:
+        image: docker:28-dind
+        options: --privileged
+        ports:
+          - 2375:2375
+        env:
+          DOCKER_TLS_CERTDIR: ""
     steps:
       - uses: actions/checkout@v2
       - name: Run Actionsflow
@@ -40,5 +48,7 @@ jobs:
       - name: Setup act
         uses: actionsflow/setup-act-for-actionsflow@v1
       - name: Run act
+        env:
+          DOCKER_HOST: tcp://localhost:2375
         run:
           act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=redpeacock78/act-environment:v1 -P ubuntu-18.04=redpeacock78/act-environment:v1
