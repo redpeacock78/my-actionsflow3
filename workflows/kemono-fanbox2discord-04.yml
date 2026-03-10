@@ -49,6 +49,20 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/19393"
       # しろた
       - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/23763531"
+      # 仮
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/107001311"
+      # ナカイザード
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/394365"
+      # さな
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/10006774"
+      # 5ナン
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/71376915"
+      # あのなっつ
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/104850714"
+      # たっく
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/175752"
+      # 怒参狐
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/fanbox/10777980"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
