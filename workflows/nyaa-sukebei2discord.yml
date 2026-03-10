@@ -42,7 +42,7 @@ jobs:
         id: anonfiles
         run: |
           {
-            post_urls=("${{ secrets.C1_URL }}" "${{ secrets.C2_URL }}" "${{ secrets.C3_URL }}")
+            post_urls=("${{ secrets.C1_URL }}" "${{ secrets.C2_URL }}" "${{ secrets.C3_URL }}" "${{ secrets.C4_URL }}" "${{ secrets.C5_URL }}" "${{ secrets.C6_URL }}" "${{ secrets.C7_URL }}" "${{ secrets.C8_URL }}" "${{ secrets.C9_URL }}")
             post_url="${post_urls[$(($RANDOM % ${#post_urls[*]}))]}"
             name=${{ on.rss.outputs.infoHash }}$(awk -F '/' '{print $NF}' <<<"${{ on.rss.outputs.link }}")
             curl -s ${{ on.rss.outputs.link }} -o "${name}" && \
