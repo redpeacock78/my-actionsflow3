@@ -33,11 +33,11 @@ jobs:
           {
             name=$(awk -F '/' '{print $NF}' <<<${{ on.poll.outputs.file_link }} || :)
             aria2c -q -x5 ${{ on.poll.outputs.file_link }} -o ${name} || :
-            timestamp=$(TZ=UTC date "+%Y-%m-%dT%H:%M:%S.%3NZ")
-            type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}" || :))
+            timestamp=$(TZ=UTC date "+%Y-%m-%dT%H:%M:%S.%3NZ" || :)
+            type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}" || :) || :)
             if [[ "${type}" =~ "Audio" ]]; then
               if [[ "${{ on.poll.outputs.category }}" =~ "newly" ]]; then
-                category=$(awk -F ':' '{if($NF == "female"){print "女性"}else if($NF == "male"){print "男性"}else{print "カップル"}}' <<<${{ on.poll.outputs.category }})
+                category=$(awk -F ':' '{if($NF == "female"){print "女性"}else if($NF == "male"){print "男性"}else{print "カップル"}}' <<<${{ on.poll.outputs.category }} || :)
                 curl -s \
                   -F "file1=@${name}" \
                   -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板/${category}\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
