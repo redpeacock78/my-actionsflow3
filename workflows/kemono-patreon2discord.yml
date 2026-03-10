@@ -43,6 +43,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/45409739"
       # shengtian000
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/98830936"
+      # lvl3toaster
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/15873007"
+      # suppai
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/97687196"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
