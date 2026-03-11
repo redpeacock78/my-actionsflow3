@@ -23,8 +23,8 @@ on:
     config:
       skipOnError: true
       format: |
-        item.title = item.title.replace(/"/g, '\\"');
-        item.author = item.author.replace(/"/g, '\\"');
+        item.title = item.title.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+        item.author = item.author.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
         return item;
 
 jobs:
