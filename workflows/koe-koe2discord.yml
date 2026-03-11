@@ -44,7 +44,7 @@ jobs:
                   ${{ secrets.DISCORD_KOEKOE_NEWLY }} > /dev/null 2>&1 || :
               elif [[ "${{ on.poll.outputs.category }}" =~ "forcus" ]]; then
                 if [[ "${{ on.poll.outputs.category }}" =~ "forcus:general" ]]; then
-                  category=$(awk -F ':' '{if($NF == "female"){print "女性"}else if($NF == "male"){print "男性"}else{print "カップル"}}' <<<${{ on.poll.outputs.category }})
+                  category=$(awk -F ':' '{if($NF == "female"){print "女性"}else if($NF == "male"){print "男性"}else{print "カップル"}}' <<<${{ on.poll.outputs.category }} || :)
                   curl -s \
                     -F "file1=@${name}" \
                     -F "payload_json={\"embeds\": [{\"author\": {\"name\": \"${{ on.poll.outputs.author }}\", \"icon_url\": \"${{ on.poll.outputs.icon }}\"}, \"description\": \"${{ on.poll.outputs.description }}\", \"title\": \"${{ on.poll.outputs.title }} \", \"url\": \"${{ on.poll.outputs.link }})\", \"timestamp\": \"${timestamp}\", \"footer\": {\"text\": \"Koe-Koe 音声掲示板/${category}\", \"icon_url\": \"https://koe-koe.com/img/favicon.ico\"}}]}" \
