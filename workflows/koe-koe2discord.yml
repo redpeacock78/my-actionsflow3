@@ -23,7 +23,7 @@ on:
     config:
       skipOnError: true
       format: |
-        item.title = item.title.replace(/"/g, '\"');
+        item.title = item.title.replace(/"/g, '\\"');
         return item;
 
 jobs:
