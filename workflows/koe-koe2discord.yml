@@ -24,6 +24,7 @@ on:
       skipOnError: true
       format: |
         item.title = item.title.replace(/"/g, '\\"');
+        item.author = item.author.replace(/"/g, '\\"');
         return item;
 
 jobs:
