@@ -41,8 +41,8 @@ jobs:
             aria2c -q -x5 "${{ on.poll.outputs.file_link }}" -o "${name}" || :
             timestamp="$(TZ=UTC date "+%Y-%m-%dT%H:%M:%S.%3NZ" || :)"
             type="$(awk -F ',' '{print $1}' <<<"$(file -b "./${name}" || :)" || :)"
-            title="$(sed "s/\\/\\\\/g" <<<"${{ on.poll.outputs.title }}" | sed 's/"/\"/g')"
-            author="$(sed "s/\\/\\\\/g" <<<"${{ on.poll.outputs.author }}" | sed 's/"/\"/g')"
+            title="${{ on.poll.outputs.title }}"
+            author="${{ on.poll.outputs.author }}"
             if [[ "${type}" =~ "Audio" ]]; then
               if [[ "${{ on.poll.outputs.category }}" =~ "newly" ]]; then
                 category=$(awk -F ':' '{if($NF == "female"){print "女性"}else if($NF == "male"){print "男性"}else{print "カップル"}}' <<<${{ on.poll.outputs.category }} || :)
