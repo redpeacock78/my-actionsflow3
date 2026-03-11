@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run Actionsflow
-        uses: qlonik/actionsflow-action@v3.1.0
+        uses: redpeacock78/actionsflow-action@v3.1.3
         with:
           args:
             "build --include ${{ github.event.inputs.include || ''}} -f ${{github.event.inputs.force=='true' && 'true' || 'false'}} --verbose ${{github.event.inputs.verbose=='true' && 'true' || 'false'}}"
