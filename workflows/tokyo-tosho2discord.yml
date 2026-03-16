@@ -99,6 +99,6 @@ jobs:
               -X POST \
               -H "Accept: application/json" \
               -H "Content-Type: application/json" \
-              -d '{"embeds":[{"title":"**${{ on.rss.outputs.title }}**","description":"${{ on.rss.outputs.comment }}","url":"${{ on.rss.outputs.tokyoToshoLink }}", "thumbnail":{"url":"'"${thumbnail}"'"}, "fields": [{"name":":closed_lock_with_key: authorized","value":"${{ on.rss.outputs.authorized }}","inline": true},{"name":":arrow_double_up: submitter","value":"${{ on.rss.outputs.submitter }}","inline": true},{"name":":open_file_folder: size","value":"${{ on.rss.outputs.size }}","inline": true},{"name":":magnet: magnet","value":"${{ on.rss.outputs.magnetLink }}"}{"name":":link: link","value":"'"${link}"'"}]}]}' \
+              -d '{"embeds":[{"title":"**${{ on.rss.outputs.title }}**","description":"${{ on.rss.outputs.comment }}","url":"${{ on.rss.outputs.tokyoToshoLink }}", "thumbnail":{"url":"'"${thumbnail}"'"}, "fields": [{"name":":closed_lock_with_key: authorized","value":"${{ on.rss.outputs.authorized }}","inline": true},{"name":":arrow_double_up: submitter","value":"${{ on.rss.outputs.submitter }}","inline": true},{"name":":open_file_folder: size","value":"${{ on.rss.outputs.size }}","inline": true},{"name":":magnet: magnet","value":"${{ on.rss.outputs.magnetLink }}"},{"name":":link: link","value":"'"${link}"'"}]}]}' \
               "${webhook}" || :
           } || exit 0
