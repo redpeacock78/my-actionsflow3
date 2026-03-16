@@ -77,5 +77,5 @@ jobs:
               -H "Accept: application/json" \
               -H "Content-Type: application/json" \
               -d '{"embeds":[{"title":"**${{ on.rss.outputs.title }}**","description":"${{ on.rss.outputs.contentSnippet }}","url":"${{ on.rss.outputs.guid }}", "thumbnail":{"url":"'"${thumbnail}"'"}, "fields": [{"name":":seedling: seeders","value":"${{ on.rss.outputs.seeders }}","inline": true},{"name":":arrow_down_small: leechers","value":"${{ on.rss.outputs.leechers }}","inline": true},{"name":":arrow_double_down: downloads","value":"${{ on.rss.outputs.downloads }}","inline": true},{"name":":open_file_folder: size","value":"${{ on.rss.outputs.size }}","inline": true},{"name":":hash: hash","value":"${{ on.rss.outputs.infoHash }}","inline": true},{"name":":link: link","value":"'"${link}"'"}]}]}' \
-              ${webhook}
+              ${webhook} > /dev/null 2>&1 || :
           } || exit 0
