@@ -1,0 +1,104 @@
+on:
+  rss:
+    url:
+      # Anime
+      - https://www.tokyotosho.info/rss.php?filter=1
+      # Non-English
+      - https://www.tokyotosho.info/rss.php?filter=10
+      # Manga
+      - https://www.tokyotosho.info/rss.php?filter=3
+      # Drama
+      - https://www.tokyotosho.info/rss.php?filter=8
+      # Music
+      - https://www.tokyotosho.info/rss.php?filter=2
+      # Music Video
+      - https://www.tokyotosho.info/rss.php?filter=9
+      # Raws
+      - https://www.tokyotosho.info/rss.php?filter=7
+      # Hentai
+      - https://www.tokyotosho.info/rss.php?filter=4
+      # Hentai (Anime)
+      - https://www.tokyotosho.info/rss.php?filter=12
+      # Hentai (Manga)
+      - https://www.tokyotosho.info/rss.php?filter=13
+      # Hentai (Games)
+      - https://www.tokyotosho.info/rss.php?filter=14
+      # Batch
+      - https://www.tokyotosho.info/rss.php?filter=11
+      # JAV
+      - https://www.tokyotosho.info/rss.php?filter=15
+      # Other
+      - https://www.tokyotosho.info/rss.php?filter=5
+    config:
+      skipOnError: true
+      format: |
+        item.category = ((item.categories ?? [])[0] || "Uncategorized").replace(/'/g, "'\\''");
+        item.size = (((item.contentSnippet ?? "").split("\n").find((line) => line.startsWith("Size:")) ?? "").replace("Size: ", "") || "Unknown Size").replace(/'/g, "'\\''");
+        item.authorized = (((item.contentSnippet ?? "").split("\n").find((line) => line.startsWith("Authorized:")) ?? "").replace("Authorized: ", "") || "Unknown Authorization").replace(/'/g, "'\\''");
+        item.submitter = (((item.contentSnippet ?? "").split("\n").find((line) => line.startsWith("Submitter:")) ?? "").replace("Submitter: ", "") || "Unknown Submitter").replace(/'/g, "'\\''");
+        item.comment = (((item.contentSnippet ?? "").split("\n").find((line) => line.startsWith("Comment:")) ?? "").replace("Comment: ", "") || "No Comment").replace(/'/g, "'\\''");
+        item.torrentLink = ((item.content ?? "").split("\n").find((line) => line.match(/Torrent Link/)) ?? "").match(/href="([^"]+)"/)?.[1] || "No Torrent Link";
+        item.magnetLink = ((item.content ?? "").split("\n").find((line) => line.match(/Magnet Link/)) ?? "").match(/href="([^"]+)"/)?.[1] || "No Magnet Link";
+        item.tokyoToshoLink = ((item.content ?? "").split("\n").find((line) => line.match(/Tokyo Tosho/)) ?? "").match(/href="([^"]+)"/)?.[1] || "No Tokyo Tosho Link";
+        return item;
+
+jobs:
+  post:
+    name: Post rss updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post anonfiles
+        id: anonfiles
+        run: |
+          {
+            post_urls=("${{ secrets.C1_URL }}" "${{ secrets.C2_URL }}" "${{ secrets.C3_URL }}" "${{ secrets.C4_URL }}" "${{ secrets.C5_URL }}" "${{ secrets.C6_URL }}" "${{ secrets.C7_URL }}" "${{ secrets.C8_URL }}" "${{ secrets.C9_URL }}")
+            post_url="${post_urls[$(($RANDOM % ${#post_urls[*]}))]}"
+            name="$(awk -F '=' '{print $NF}' <<<"${{ on.rss.outputs.tokyoToshoLink }}").torrent"
+            curl -sL ${{ on.rss.outputs.torrentLink }} -o "${name}" && \
+            json=$(curl -s -X POST -H 'Content-Type: multipart/form-data' -F "file=@${name}" "${post_url}" | base64 -w 0) && \
+            echo "::set-output name=json::${json}"
+          } || exit 0
+      - name: Post
+        run: |
+          {
+            cdn_id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .attachments[0].url | awk -F '/' '{print $5}')
+            id=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .attachments[0].url | awk -F '/' '{print $6}')
+            name=$(echo ${{ steps.anonfiles.outputs.json }} | base64 -d | jq -r .attachments[0].filename)
+            link="https://${{ secrets.API_DOMAIN }}/v1/proxy/discord/${cdn_id}/${id}/${name}"
+            thumbnail="https://gcp.ttcdn.info/favicon.png"
+            if [[ "${{ on.rss.outputs.category }}" == "Anime" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_ANIME }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Non-English" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_NON_ENGLISH }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Manga" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_MANGA }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Drama" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_DRAMA }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Music" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_MUSIC }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Music Video" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_MUSIC_VIDEO }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Raws" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_RAWS }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Hentai" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_HENTAI }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Hentai (Anime)" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_HENTAI_ANIME }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Hentai (Manga)" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_HENTAI_MANGA }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Hentai (Games)" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_HENTAI_GAMES }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Batch" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_BATCH }}
+            elif [[ "${{ on.rss.outputs.category }}" == "JAV" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_JAV }}
+            elif [[ "${{ on.rss.outputs.category }}" == "Other" ]]; then
+              webhook=${{ secrets.DISCORD_TOKYO_TOSHOKAN_OTHER }}
+            fi
+            curl -s \
+              -X POST \
+              -H "Accept: application/json" \
+              -H "Content-Type: application/json" \
+              -d '{"embeds":[{"title":"**${{ on.rss.outputs.title }}**","description":"${{ on.rss.outputs.comment }}","url":"${{ on.rss.outputs.tokyoToshoLink }}", "thumbnail":{"url":"'"${thumbnail}"'"}, "fields": [{"name":":closed_lock_with_key: authorized","value":"${{ on.rss.outputs.authorized }}","inline": true},{"name":":arrow_double_up: submitter","value":"${{ on.rss.outputs.submitter }}","inline": true},{"name":":open_file_folder: size","value":"${{ on.rss.outputs.size }}","inline": true},{"name":":magnet: magnet","value":"${{ on.rss.outputs.magnetLink }}"}{"name":":link: link","value":"'"${link}"'"}]}]}' \
+              "${webhook}" > /dev/null 2>&1 || :
+          } || exit 0
