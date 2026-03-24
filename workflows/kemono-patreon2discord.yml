@@ -47,6 +47,10 @@ on:
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/15873007"
       # suppai
       - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/97687196"
+      # RIRI
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/73089747"
+      # NENE
+      - "https://my-api.redpeacock78.com/v1/kemono/posts/patreon/164731250"
     itemsPath: items
     deduplicationKey: id
     buildOutputsOnError: true
