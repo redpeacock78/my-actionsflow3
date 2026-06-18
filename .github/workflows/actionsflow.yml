@@ -36,7 +36,7 @@ jobs:
         env:
           DOCKER_TLS_CERTDIR: ""
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Run Actionsflow
         uses: redpeacock78/actionsflow-action@v3.1.4
         with:
