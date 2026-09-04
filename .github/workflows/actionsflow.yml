@@ -37,6 +37,15 @@ jobs:
           DOCKER_TLS_CERTDIR: ""
     steps:
       - uses: actions/checkout@v6
+      - name: Set up WARP
+        uses: fscarmen/warp-on-actions@v1.4
+        with:
+          stack: dual
+          mode: wireguard
+      - name: Check WARP
+        shell: bash
+        run: |
+          curl -fsS https://www.cloudflare.com/cdn-cgi/trace
       - name: Run Actionsflow
         uses: redpeacock78/actionsflow-action@v3.1.4
         with:
