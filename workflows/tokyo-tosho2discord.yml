@@ -32,14 +32,56 @@ on:
     config:
       skipOnError: true
       format: |
-        item.category = ((item.categories ?? [])[0] || "Uncategorized").replace(/'/g, "'\\''");
-        item.size = (((item.contentSnippet ?? "").split("\n").find((line) => line.startsWith("Size:")) ?? "").replace("Size: ", "") || "Unknown Size").replace(/'/g, "'\\''");
-        item.authorized = (((item.contentSnippet ?? "").split("\n").find((line) => line.startsWith("Authorized:")) ?? "").replace("Authorized: ", "") || "Unknown Authorization").replace(/'/g, "'\\''");
-        item.submitter = (((item.contentSnippet ?? "").split("\n").find((line) => line.startsWith("Submitter:")) ?? "").replace("Submitter: ", "") || "Unknown Submitter").replace(/'/g, "'\\''");
-        item.comment = (((item.contentSnippet ?? "").split("\n").find((line) => line.startsWith("Comment:")) ?? "").replace("Comment: ", "") || "No Comment").replace(/'/g, "'\\''");
-        item.torrentLink = ((item.content ?? "").split("\n").find((line) => line.match(/Torrent Link/)) ?? "").match(/href="([^"]+)"/)?.[1] || "No Torrent Link";
-        item.magnetLink = ((item.content ?? "").split("\n").find((line) => line.match(/Magnet Link/)) ?? "").match(/href="([^"]+)"/)?.[1] || "No Magnet Link";
-        item.tokyoToshoLink = ((item.content ?? "").split("\n").find((line) => line.match(/Tokyo Tosho/)) ?? "").match(/href="([^"]+)"/)?.[1] || "No Tokyo Tosho Link";
+        item.category = ((item.categories ?? [])[0] || "Uncategorized").replace(
+          /'/g,
+          "'\\''",
+        );
+        item.size = (
+          (
+            (item.contentSnippet ?? "")
+              .split("\n")
+              .find((line) => line.startsWith("Size:")) ?? ""
+          ).replace("Size: ", "") || "Unknown Size"
+        ).replace(/'/g, "'\\''");
+        item.authorized = (
+          (
+            (item.contentSnippet ?? "")
+              .split("\n")
+              .find((line) => line.startsWith("Authorized:")) ?? ""
+          ).replace("Authorized: ", "") || "Unknown Authorization"
+        ).replace(/'/g, "'\\''");
+        item.submitter = (
+          (
+            (item.contentSnippet ?? "")
+              .split("\n")
+              .find((line) => line.startsWith("Submitter:")) ?? ""
+          ).replace("Submitter: ", "") || "Unknown Submitter"
+        ).replace(/'/g, "'\\''");
+        item.comment = (
+          (
+            (item.contentSnippet ?? "")
+              .split("\n")
+              .find((line) => line.startsWith("Comment:")) ?? ""
+          ).replace("Comment: ", "") || "No Comment"
+        ).replace(/'/g, "'\\''");
+        item.torrentLink =
+          (
+            (item.content ?? "")
+              .split("\n")
+              .find((line) => line.match(/Torrent Link/)) ?? ""
+          ).match(/href="([^"]+)"/)?.[1] || "No Torrent Link";
+        item.magnetLink =
+          (
+            (item.content ?? "")
+              .split("\n")
+              .find((line) => line.match(/Magnet Link/)) ?? ""
+          ).match(/href="([^"]+)"/)?.[1] || "No Magnet Link";
+        item.tokyoToshoLink =
+          (
+            (item.content ?? "")
+              .split("\n")
+              .find((line) => line.match(/Tokyo Tosho/)) ?? ""
+          ).match(/href="([^"]+)"/)?.[1] || "No Tokyo Tosho Link";
         return item;
 
 jobs:
@@ -53,9 +95,11 @@ jobs:
           {
             post_urls=("${{ secrets.C1_URL }}" "${{ secrets.C2_URL }}" "${{ secrets.C3_URL }}" "${{ secrets.C4_URL }}" "${{ secrets.C5_URL }}" "${{ secrets.C6_URL }}" "${{ secrets.C7_URL }}" "${{ secrets.C8_URL }}" "${{ secrets.C9_URL }}")
             post_url="${post_urls[$(($RANDOM % ${#post_urls[*]}))]}"
-            name="$(awk -F '=' '{print $NF}' <<<"${{ on.rss.outputs.tokyoToshoLink }}").torrent"
-            curl -sL ${{ on.rss.outputs.torrentLink }} -o "${name}" && \
-            json=$(curl -s -X POST -H 'Content-Type: multipart/form-data' -F "file=@${name}" "${post_url}" | base64 -w 0) && \
+            random="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)"
+            name="$(awk -F '=' '{print $NF}' <<<"${{ on.rss.outputs.tokyoToshoLink }}")"
+            file_name="$([[ -n "${name}" ]] && echo "${name}" || echo "${random}").torrent"
+            curl -sL ${{ on.rss.outputs.torrentLink }} -o "${file_name}" && \
+            json=$(curl -s -X POST -H 'Content-Type: multipart/form-data' -F "file=@${file_name}" "${post_url}" | base64 -w 0) && \
             echo "::set-output name=json::${json}"
           } || exit 0
       - name: Post
