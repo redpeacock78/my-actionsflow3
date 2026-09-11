@@ -38,6 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Set up WARP
+        timeout-minutes: 1
         uses: fscarmen/warp-on-actions@v1.4
         with:
           stack: dual
