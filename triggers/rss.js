@@ -117,15 +117,6 @@ class Rss {
           try {
             return await originalParseString(xml);
           } catch (error) {
-            const message =
-              error && error.message
-                ? error.message
-                : String(error);
-
-            this.helpers.log.warn(
-              `RSS parse error treated as empty feed [${feedUrl}]: ${message}`
-            );
-
             return {
               items: [],
             };
