@@ -44,18 +44,22 @@ jobs:
           stack: dual
           mode: wireguard
       - name: Check WARP
+        if: ${{ success() }}
         shell: bash
         run: |
           curl -fsS https://www.cloudflare.com/cdn-cgi/trace
       - name: Run Actionsflow
+        if: ${{ success() }}
         uses: redpeacock78/actionsflow-action@v3.1.4
         with:
           args: "build --include ${{ github.event.inputs.include || ''}} -f ${{github.event.inputs.force=='true' && 'true' || 'false'}} --verbose ${{github.event.inputs.verbose=='true' && 'true' || 'false'}}"
           json-secrets: ${{ toJSON(secrets) }}
           json-github: ${{ toJSON(github) }}
       - name: Setup act
+        if: ${{ success() }}
         uses: actionsflow/setup-act-for-actionsflow@v1
       - name: Run act
+        if: ${{ success() }}
         env:
           DOCKER_HOST: tcp://localhost:2375
         run: act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=redpeacock78/act-environment:v1 -P ubuntu-18.04=redpeacock78/act-environment:v1
