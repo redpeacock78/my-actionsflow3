@@ -45,9 +45,27 @@ jobs:
           mode: wireguard
       - name: Check WARP
         if: ${{ success() }}
+        timeout-minutes: 1
         shell: bash
         run: |
-          curl -fsS https://www.cloudflare.com/cdn-cgi/trace
+          cleanup_warp() {
+            if ip link show warp >/dev/null 2>&1; then
+              timeout --foreground --signal=TERM --kill-after=5s 10s sudo wg-quick down warp || {
+                sudo resolvconf -d warp >/dev/null 2>&1 || true
+                sudo ip link delete warp >/dev/null 2>&1 || true
+              }
+            fi
+          }
+
+          trace=""
+          if ! trace="$(curl -fsS --connect-timeout 3 --max-time 8 https://www.cloudflare.com/cdn-cgi/trace)" ||
+             ! grep -q '^warp=on$' <<<"$trace"; then
+            echo "WARP verification failed; restoring runner network."
+            cleanup_warp
+            exit 1
+          fi
+
+          printf '%s\n' "$trace"
       - name: Run Actionsflow
         if: ${{ success() }}
         uses: redpeacock78/actionsflow-action@v3.1.5
@@ -63,3 +81,16 @@ jobs:
         env:
           DOCKER_HOST: tcp://localhost:2375
         run: act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=redpeacock78/act-environment:v1 -P ubuntu-18.04=redpeacock78/act-environment:v1
+      - name: Tear down WARP
+        if: ${{ always() }}
+        timeout-minutes: 1
+        shell: bash
+        run: |
+          if ip link show warp >/dev/null 2>&1; then
+            echo "Restoring runner network before job completion..."
+            timeout --foreground --signal=TERM --kill-after=5s 10s sudo wg-quick down warp || {
+              echo "wg-quick down failed; applying best-effort cleanup"
+              sudo resolvconf -d warp >/dev/null 2>&1 || true
+              sudo ip link delete warp >/dev/null 2>&1 || true
+            }
+          fi
