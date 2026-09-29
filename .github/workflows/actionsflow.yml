@@ -59,7 +59,13 @@ jobs:
 
           trace=""
           if ! trace="$(curl -fsS --connect-timeout 3 --max-time 8 https://www.cloudflare.com/cdn-cgi/trace)" ||
-             ! grep -q '^warp=on
+             ! grep -q '^warp=on$' <<<"$trace"; then
+            echo "WARP verification failed; restoring runner network."
+            cleanup_warp
+            exit 1
+          fi
+
+          printf '%s\n' "$trace"
       - name: Run Actionsflow
         if: ${{ success() }}
         uses: redpeacock78/actionsflow-action@v3.1.5
@@ -88,25 +94,3 @@ jobs:
               sudo ip link delete warp >/dev/null 2>&1 || true
             }
           fi
- <<<"$trace"; then
-            echo "WARP verification failed; restoring runner network."
-            cleanup_warp
-            exit 1
-          fi
-
-          printf '%s\n' "$trace"
-      - name: Run Actionsflow
-        if: ${{ success() }}
-        uses: redpeacock78/actionsflow-action@v3.1.5
-        with:
-          args: "build --include ${{ github.event.inputs.include || ''}} -f ${{github.event.inputs.force=='true' && 'true' || 'false'}} --verbose ${{github.event.inputs.verbose=='true' && 'true' || 'false'}}"
-          json-secrets: ${{ toJSON(secrets) }}
-          json-github: ${{ toJSON(github) }}
-      - name: Setup act
-        if: ${{ success() }}
-        uses: actionsflow/setup-act-for-actionsflow@v1
-      - name: Run act
-        if: ${{ success() }}
-        env:
-          DOCKER_HOST: tcp://localhost:2375
-        run: act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=redpeacock78/act-environment:v1 -P ubuntu-18.04=redpeacock78/act-environment:v1
