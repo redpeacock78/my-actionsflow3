@@ -1,0 +1,134 @@
+# Hardened local copy based on fscarmen/warp-on-actions@v1.4.
+# Keeps the same inputs while bounding potentially blocking commands.
+name: "Install WARP (hardened)"
+author: "fscarmen / redpeacock78"
+description: "Install Cloudflare WARP on GitHub Actions with bounded waits"
+
+inputs:
+  stack:
+    description: "Choose WARP stacks: IPv4/IPv6 only or dualstacks."
+    required: false
+    default: "dual"
+
+  mode:
+    description: "Choose WARP mode: wireguard or client."
+    required: false
+    default: "wireguard"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install WARP
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        run_timed() {
+          local seconds="$1"
+          shift
+          timeout --foreground --signal=TERM --kill-after=5s "${seconds}s" "$@"
+        }
+
+        probe_ip() {
+          local family="$1"
+          local primary="$2"
+          local fallback="$3"
+          local out=""
+
+          if out="$(run_timed 12 curl -fsS "$family" --connect-timeout 3 --max-time 5 --retry 1 --retry-delay 1 --retry-max-time 8 -A Mozilla "$primary" 2>/dev/null)" ||
+             out="$(run_timed 12 curl -fsS "$family" --connect-timeout 3 --max-time 5 --retry 1 --retry-delay 1 --retry-max-time 8 "$fallback" 2>/dev/null)"; then
+            printf '%s\n' "$out"
+          else
+            printf 'unavailable\n'
+          fi
+        }
+
+        if [ "${{ inputs.mode }}" = "client" ]; then
+          echo "WARP mode: client warp+doh."
+          run_timed 45 sudo apt-get -y update
+
+          key_file="$(mktemp)"
+          run_timed 15 curl -fsSL --connect-timeout 5 --max-time 12 https://pkg.cloudflareclient.com/pubkey.gpg -o "$key_file"
+          sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg "$key_file"
+          rm -f "$key_file"
+
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" |
+            sudo tee /etc/apt/sources.list.d/cloudflare-client.list >/dev/null
+
+          run_timed 45 sudo apt-get update
+          run_timed 45 sudo apt-get install -y cloudflare-warp
+          run_timed 20 sudo warp-cli --accept-tos registration new
+          run_timed 10 sudo warp-cli --accept-tos mode warp+doh
+
+          if [ "${{ inputs.stack }}" = "ipv4" ]; then
+            run_timed 10 sudo warp-cli --accept-tos tunnel ip add-range ::0/0
+          elif [ "${{ inputs.stack }}" = "ipv6" ]; then
+            run_timed 10 sudo warp-cli --accept-tos tunnel ip add-range 0.0.0.0/0
+          fi
+
+          run_timed 20 sudo warp-cli --accept-tos connect
+
+        elif [ "${{ inputs.mode }}" = "wireguard" ]; then
+          echo "WARP mode: wireguard."
+          run_timed 45 sudo apt-get -y update
+
+          if [ "$(lsb_release -is 2>/dev/null)" = "Ubuntu" ] &&
+             [ "$(lsb_release -rs | awk -F. '{print $1$2}')" -ge 2404 ]; then
+            run_timed 45 sudo apt-get -y install --no-install-recommends net-tools iproute2 resolvconf dnsutils iptables wireguard-tools
+          else
+            run_timed 45 sudo apt-get -y install --no-install-recommends net-tools iproute2 openresolv dnsutils iptables wireguard-tools
+          fi
+
+          LAN="$(run_timed 5 ip route get 192.168.193.10 | grep -oP 'src \K\S+')"
+          CONFIG="[Interface]
+          PrivateKey = cKE7LmCF61IhqqABGhvJ44jWXp8fKymcMAEVAzbDF2k=
+          Address = 172.16.0.2/32
+          Address = fd01:5ca1:ab1e:823e:e094:eb1c:ff87:1fab/128
+          PostUp = ip -4 rule add from $LAN lookup main
+          PostDown = ip -4 rule delete from $LAN lookup main
+          DNS = 1.1.1.1,8.8.8.8,8.8.4.4,2606:4700:4700::1111,2001:4860:4860::8888,2001:4860:4860::8844
+          MTU = 1280
+
+          [Peer]
+          PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+          "
+
+          if [ "${{ inputs.stack }}" = "ipv4" ]; then
+            CONFIG+="AllowedIPs = 0.0.0.0/0
+            "
+          elif [ "${{ inputs.stack }}" = "ipv6" ]; then
+            CONFIG+="AllowedIPs = ::/0
+            "
+          else
+            CONFIG+="AllowedIPs = 0.0.0.0/0
+            AllowedIPs = ::/0
+            "
+          fi
+
+          CONFIG+="Endpoint = engage.cloudflareclient.com:2408"
+          echo "$CONFIG" | sed "s/^[ ]\+//g" | sudo tee /etc/wireguard/warp.conf >/dev/null
+          run_timed 20 sudo wg-quick up warp
+
+        else
+          echo "WARP mode: ${{ inputs.mode }}."
+          echo "You can choose client or wireguard."
+          exit 1
+        fi
+
+        sleep 1
+        echo "==============================="
+        echo "IP:"
+
+        ipv4_file="$(mktemp)"
+        ipv6_file="$(mktemp)"
+        probe_ip -4 https://api-ipv4.ip.sb/geoip https://speed.cloudflare.com/meta >"$ipv4_file" &
+        ipv4_pid=$!
+        probe_ip -6 https://api-ipv6.ip.sb/geoip https://speed.cloudflare.com/meta >"$ipv6_file" &
+        ipv6_pid=$!
+
+        wait "$ipv4_pid" || true
+        wait "$ipv6_pid" || true
+
+        echo "IPv4: $(cat "$ipv4_file")"
+        echo "IPv6: $(cat "$ipv6_file")"
+        rm -f "$ipv4_file" "$ipv6_file"
