@@ -1,8 +1,9 @@
 # Hardened local copy based on fscarmen/warp-on-actions@v1.4.
-# Keeps the same inputs while bounding potentially blocking commands.
+# Keeps the same inputs while bounding potentially blocking commands and
+# restoring the runner network before failing.
 name: "Install WARP (hardened)"
 author: "fscarmen / redpeacock78"
-description: "Install Cloudflare WARP on GitHub Actions with bounded waits"
+description: "Install Cloudflare WARP on GitHub Actions with bounded waits and recovery"
 
 inputs:
   stack:
@@ -29,19 +30,30 @@ runs:
           timeout --foreground --signal=TERM --kill-after=5s "${seconds}s" "$@"
         }
 
-        probe_ip() {
-          local family="$1"
-          local primary="$2"
-          local fallback="$3"
-          local out=""
+        warp_ready=false
 
-          if out="$(run_timed 12 curl -fsS "$family" --connect-timeout 3 --max-time 5 --retry 1 --retry-delay 1 --retry-max-time 8 -A Mozilla "$primary" 2>/dev/null)" ||
-             out="$(run_timed 12 curl -fsS "$family" --connect-timeout 3 --max-time 5 --retry 1 --retry-delay 1 --retry-max-time 8 "$fallback" 2>/dev/null)"; then
-            printf '%s\n' "$out"
-          else
-            printf 'unavailable\n'
+        cleanup_warp() {
+          if ip link show warp >/dev/null 2>&1; then
+            echo "Restoring runner network..."
+            run_timed 10 sudo wg-quick down warp || {
+              echo "wg-quick down timed out or failed; applying best-effort cleanup"
+              sudo resolvconf -d warp >/dev/null 2>&1 || true
+              sudo ip link delete warp >/dev/null 2>&1 || true
+            }
           fi
         }
+
+        on_exit() {
+          local rc=$?
+          if [ "$warp_ready" != "true" ]; then
+            cleanup_warp || true
+          fi
+          trap - EXIT
+          exit "$rc"
+        }
+
+        trap on_exit EXIT
+        trap 'exit 143' TERM INT
 
         if [ "${{ inputs.mode }}" = "client" ]; then
           echo "WARP mode: client warp+doh."
@@ -52,7 +64,8 @@ runs:
           sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg "$key_file"
           rm -f "$key_file"
 
-          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" |
+          echo "deb [arch=amd64 signed-by=usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" |
+            sed 's#signed-by=usr/#signed-by=/usr/#' |
             sudo tee /etc/apt/sources.list.d/cloudflare-client.list >/dev/null
 
           run_timed 45 sudo apt-get update
@@ -67,6 +80,7 @@ runs:
           fi
 
           run_timed 20 sudo warp-cli --accept-tos connect
+          warp_ready=true
 
         elif [ "${{ inputs.mode }}" = "wireguard" ]; then
           echo "WARP mode: wireguard."
@@ -80,6 +94,12 @@ runs:
           fi
 
           LAN="$(run_timed 5 ip route get 192.168.193.10 | grep -oP 'src \K\S+')"
+          CHECK_IP="$(run_timed 5 getent ahostsv4 www.cloudflare.com | awk 'NR == 1 { print $1 }')"
+          if [ -z "$CHECK_IP" ]; then
+            echo "Could not resolve www.cloudflare.com before enabling WARP"
+            exit 1
+          fi
+
           CONFIG="[Interface]
           PrivateKey = cKE7LmCF61IhqqABGhvJ44jWXp8fKymcMAEVAzbDF2k=
           Address = 172.16.0.2/32
@@ -107,7 +127,51 @@ runs:
 
           CONFIG+="Endpoint = engage.cloudflareclient.com:2408"
           echo "$CONFIG" | sed "s/^[ ]\+//g" | sudo tee /etc/wireguard/warp.conf >/dev/null
-          run_timed 20 sudo wg-quick up warp
+
+          check_warp() {
+            local trace=""
+
+            if ! trace="$(run_timed 8 curl -fsS               --connect-timeout 3               --max-time 6               --resolve "www.cloudflare.com:443:$CHECK_IP"               https://www.cloudflare.com/cdn-cgi/trace 2>/dev/null)"; then
+              return 1
+            fi
+
+            if ! grep -q '^warp=on$' <<<"$trace"; then
+              return 1
+            fi
+
+            if ! run_timed 5 getent ahostsv4 github.com >/dev/null 2>&1; then
+              return 1
+            fi
+
+            printf '%s\n' "$trace"
+          }
+
+          trace=""
+          for attempt in 1 2; do
+            echo "Starting WARP tunnel (attempt $attempt/2)..."
+            run_timed 15 sudo wg-quick up warp
+            sleep 1
+
+            if trace="$(check_warp)"; then
+              warp_ready=true
+              echo "WARP tunnel is healthy."
+              printf '%s\n' "$trace"
+              break
+            fi
+
+            echo "WARP tunnel is not healthy."
+            cleanup_warp
+
+            if [ "$attempt" -lt 2 ]; then
+              echo "Retrying WARP tunnel..."
+              sleep 1
+            fi
+          done
+
+          if [ "$warp_ready" != "true" ]; then
+            echo "WARP failed health checks after 2 attempts."
+            exit 1
+          fi
 
         else
           echo "WARP mode: ${{ inputs.mode }}."
@@ -115,20 +179,4 @@ runs:
           exit 1
         fi
 
-        sleep 1
-        echo "==============================="
-        echo "IP:"
-
-        ipv4_file="$(mktemp)"
-        ipv6_file="$(mktemp)"
-        probe_ip -4 https://api-ipv4.ip.sb/geoip https://speed.cloudflare.com/meta >"$ipv4_file" &
-        ipv4_pid=$!
-        probe_ip -6 https://api-ipv6.ip.sb/geoip https://speed.cloudflare.com/meta >"$ipv6_file" &
-        ipv6_pid=$!
-
-        wait "$ipv4_pid" || true
-        wait "$ipv6_pid" || true
-
-        echo "IPv4: $(cat "$ipv4_file")"
-        echo "IPv6: $(cat "$ipv6_file")"
-        rm -f "$ipv4_file" "$ipv6_file"
+        trap - EXIT
