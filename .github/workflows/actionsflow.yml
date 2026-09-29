@@ -48,42 +48,9 @@ jobs:
         shell: bash
         run: |
           curl -fsS https://www.cloudflare.com/cdn-cgi/trace
-      - name: Diagnose Actions API auth
-        if: ${{ success() }}
-        shell: bash
-        env:
-          ACTIONSFLOW_GITHUB_TOKEN: ${{ secrets.github_token }}
-          BUILTIN_GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          set +e
-
-          check_api() {
-            local label="$1"
-            local token="$2"
-            local endpoint="$3"
-
-            echo "::group::$label"
-            GH_TOKEN="$token" gh api -i \
-              -H "Accept: application/vnd.github+json" \
-              -H "X-GitHub-Api-Version: 2026-03-10" \
-              "$endpoint"
-            local rc=$?
-            echo "exit_code=$rc"
-            echo "::endgroup::"
-          }
-
-          run_endpoint="repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
-          artifacts_endpoint="repos/$GITHUB_REPOSITORY/actions/artifacts?per_page=5"
-
-          check_api "custom github_token: getWorkflowRun" "$ACTIONSFLOW_GITHUB_TOKEN" "$run_endpoint"
-          check_api "custom github_token: listArtifactsForRepo" "$ACTIONSFLOW_GITHUB_TOKEN" "$artifacts_endpoint"
-          check_api "built-in github.token: getWorkflowRun" "$BUILTIN_GITHUB_TOKEN" "$run_endpoint"
-          check_api "built-in github.token: listArtifactsForRepo" "$BUILTIN_GITHUB_TOKEN" "$artifacts_endpoint"
-
-          exit 0
       - name: Run Actionsflow
         if: ${{ success() }}
-        uses: redpeacock78/actionsflow-action@v3.1.4
+        uses: redpeacock78/actionsflow-action@v3.1.5
         with:
           args: "build --include ${{ github.event.inputs.include || ''}} -f ${{github.event.inputs.force=='true' && 'true' || 'false'}} --verbose ${{github.event.inputs.verbose=='true' && 'true' || 'false'}}"
           json-secrets: ${{ toJSON(secrets) }}
