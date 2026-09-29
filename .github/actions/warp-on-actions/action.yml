@@ -64,8 +64,7 @@ runs:
           sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg "$key_file"
           rm -f "$key_file"
 
-          echo "deb [arch=amd64 signed-by=usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" |
-            sed 's#signed-by=usr/#signed-by=/usr/#' |
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ $(lsb_release -cs) main" |
             sudo tee /etc/apt/sources.list.d/cloudflare-client.list >/dev/null
 
           run_timed 45 sudo apt-get update
