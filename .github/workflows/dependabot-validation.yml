@@ -30,9 +30,7 @@ jobs:
           github-token: ${{ github.token }}
 
       - name: Validate dependency tree
-        run: |
-          npm ci
-          npm ls --all
+        run: npm ci
 
       - name: Save validated PR metadata
         shell: bash
