@@ -26,18 +26,51 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Merge validated patch and minor updates
+      - name: Checkout trusted gate code
+        uses: actions/checkout@v7
+        with:
+          ref: master
+          persist-credentials: false
+
+      - name: Read validated metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            echo "UPDATE_TYPE=$(cat dependabot-metadata/dependabot-update-type)"
+            echo "DEPENDENCY_NAMES=$(cat dependabot-metadata/dependabot-dependency-names)"
+            echo "PACKAGE_ECOSYSTEM=$(cat dependabot-metadata/dependabot-package-ecosystem)"
+            echo "PR_NUMBER=$(cat dependabot-metadata/dependabot-pr-number)"
+            echo "EXPECTED_HEAD_SHA=$(cat dependabot-metadata/dependabot-head-sha)"
+          } >> "${GITHUB_ENV}"
+
+      - name: Route PR with Jev
+        id: jev
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AI_GATEWAY_API_KEY: ${{ secrets.AI_GATEWAY_API_KEY }}
+          JEV_MODEL: ${{ vars.JEV_MODEL || 'typesafe-ai/jev' }}
+          JEV_MIN_CONFIDENCE: ${{ vars.JEV_MIN_CONFIDENCE || '0.40' }}
+          JEV_MIN_AUTO_PROBABILITY: ${{ vars.JEV_MIN_AUTO_PROBABILITY || '0.60' }}
+          JEV_MIN_AUTO_MARGIN: ${{ vars.JEV_MIN_AUTO_MARGIN || '0.20' }}
+        run: node .github/scripts/jev-pr-gate.mjs
+
+      - name: Leave PR for deeper review
+        if: steps.jev.outputs.route != 'AUTO_MERGE'
+        run: |
+          echo "Jev routed PR #${PR_NUMBER} to ${{ steps.jev.outputs.route }}."
+          echo "Automatic merge is intentionally skipped."
+
+      - name: Merge Jev-approved update
+        if: steps.jev.outputs.route == 'AUTO_MERGE'
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
 
-          update_type="$(cat dependabot-metadata/dependabot-update-type)"
-          pr_number="$(cat dependabot-metadata/dependabot-pr-number)"
-          validated_sha="$(cat dependabot-metadata/dependabot-head-sha)"
-
-          pr_json="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}")"
+          pr_json="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}")"
           author="$(jq -r '.user.login' <<<"${pr_json}")"
           state="$(jq -r '.state' <<<"${pr_json}")"
           draft="$(jq -r '.draft' <<<"${pr_json}")"
@@ -49,20 +82,11 @@ jobs:
             exit 0
           fi
 
-          if [[ "${current_sha}" != "${validated_sha}" ]]; then
-            echo "PR head changed after validation; a newer validation run must merge it."
+          if [[ "${current_sha}" != "${EXPECTED_HEAD_SHA}" ]]; then
+            echo "PR head changed after Jev review; a newer validation run must merge it."
             exit 0
           fi
 
-          case "${update_type}" in
-            version-update:semver-patch|version-update:semver-minor)
-              ;;
-            *)
-              echo "Leaving ${update_type} for manual review."
-              exit 0
-              ;;
-          esac
-
-          gh api --method PUT "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}/merge" \
+          gh api --method PUT "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUMBER}/merge" \
             -f merge_method=squash \
-            -f sha="${validated_sha}"
+            -f sha="${EXPECTED_HEAD_SHA}"
