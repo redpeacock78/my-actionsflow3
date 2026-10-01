@@ -1,0 +1,52 @@
+name: Dependabot validation
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout dependency PR
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          package-manager-cache: false
+
+      - name: Read Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v3
+        with:
+          github-token: ${{ github.token }}
+
+      - name: Validate dependency tree
+        run: |
+          npm ci
+          npm ls --all
+
+      - name: Save validated PR metadata
+        shell: bash
+        run: |
+          printf '%s\n' '${{ steps.metadata.outputs.update-type }}' > dependabot-update-type
+          printf '%s\n' '${{ github.event.pull_request.number }}' > dependabot-pr-number
+          printf '%s\n' '${{ github.event.pull_request.head.sha }}' > dependabot-head-sha
+
+      - name: Upload validated metadata
+        uses: actions/upload-artifact@v7
+        with:
+          name: dependabot-metadata
+          path: |
+            dependabot-update-type
+            dependabot-pr-number
+            dependabot-head-sha
+          retention-days: 1
