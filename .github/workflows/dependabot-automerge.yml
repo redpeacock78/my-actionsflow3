@@ -63,4 +63,6 @@ jobs:
               ;;
           esac
 
-          gh api --method PUT             "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}/merge"             -f merge_method=squash             -f sha="${validated_sha}"
+          gh api --method PUT "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}/merge" \
+            -f merge_method=squash \
+            -f sha="${validated_sha}"
