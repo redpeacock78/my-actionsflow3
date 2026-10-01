@@ -1,0 +1,63 @@
+name: Dependency health
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependency graph
+        shell: bash
+        run: |
+          npm audit --json > dependency-audit.json || true
+          node .github/scripts/dependency-health.mjs dependency-audit.json > dependency-health.md
+          cat dependency-health.md
+
+      - name: Sync dependency-health issue
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_TITLE: "[dependency-health] unresolved npm advisories"
+        run: |
+          set -euo pipefail
+
+          issues_json="$(gh issue list --state all --limit 100 --json number,title,state)"
+          issue_number="$(jq -r --arg title "$ISSUE_TITLE" '.[] | select(.title == $title) | .number' <<<"$issues_json" | head -n1)"
+          issue_state="$(jq -r --arg title "$ISSUE_TITLE" '.[] | select(.title == $title) | .state' <<<"$issues_json" | head -n1)"
+
+          if grep -q '<!-- dependency-health:clean -->' dependency-health.md; then
+            if [[ -n "$issue_number" && "$issue_state" == "OPEN" ]]; then
+              gh issue close "$issue_number"
+            fi
+            exit 0
+          fi
+
+          if [[ -z "$issue_number" ]]; then
+            gh issue create --title "$ISSUE_TITLE" --body-file dependency-health.md
+            exit 0
+          fi
+
+          if [[ "$issue_state" == "CLOSED" ]]; then
+            gh issue reopen "$issue_number"
+          fi
+
+          gh issue edit "$issue_number" --body-file dependency-health.md
