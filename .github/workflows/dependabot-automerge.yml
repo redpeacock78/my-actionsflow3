@@ -1,0 +1,66 @@
+name: Dependabot auto-merge
+
+on:
+  workflow_run:
+    workflows:
+      - Dependabot validation
+    types:
+      - completed
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download validated metadata
+        uses: actions/download-artifact@v8
+        with:
+          name: dependabot-metadata
+          path: dependabot-metadata
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Merge validated patch and minor updates
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          update_type="$(cat dependabot-metadata/dependabot-update-type)"
+          pr_number="$(cat dependabot-metadata/dependabot-pr-number)"
+          validated_sha="$(cat dependabot-metadata/dependabot-head-sha)"
+
+          pr_json="$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}")"
+          author="$(jq -r '.user.login' <<<"${pr_json}")"
+          state="$(jq -r '.state' <<<"${pr_json}")"
+          draft="$(jq -r '.draft' <<<"${pr_json}")"
+          base="$(jq -r '.base.ref' <<<"${pr_json}")"
+          current_sha="$(jq -r '.head.sha' <<<"${pr_json}")"
+
+          if [[ "${author}" != "dependabot[bot]" || "${state}" != "open" || "${draft}" != "false" || "${base}" != "master" ]]; then
+            echo "PR is no longer an eligible Dependabot PR; skipping."
+            exit 0
+          fi
+
+          if [[ "${current_sha}" != "${validated_sha}" ]]; then
+            echo "PR head changed after validation; a newer validation run must merge it."
+            exit 0
+          fi
+
+          case "${update_type}" in
+            version-update:semver-patch|version-update:semver-minor)
+              ;;
+            *)
+              echo "Leaving ${update_type} for manual review."
+              exit 0
+              ;;
+          esac
+
+          gh api --method PUT             "repos/${GITHUB_REPOSITORY}/pulls/${pr_number}/merge"             -f merge_method=squash             -f sha="${validated_sha}"
