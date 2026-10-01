@@ -1,0 +1,71 @@
+on:
+  poll:
+    url:
+      - "https://my-api.redpeacock78.com/v1/twikeep/views/24hour"
+      - "https://my-api.redpeacock78.com/v1/twikeep/views/1week"
+      - "https://my-api.redpeacock78.com/v1/twikeep/views/1month"
+      - "https://my-api.redpeacock78.com/v1/twikeep/views/1year"
+      - "https://my-api.redpeacock78.com/v1/twikeep/likes/24hour"
+      - "https://my-api.redpeacock78.com/v1/twikeep/likes/1week"
+      - "https://my-api.redpeacock78.com/v1/twikeep/likes/1month"
+      - "https://my-api.redpeacock78.com/v1/twikeep/likes/1year"
+      - "https://my-api.redpeacock78.com/v1/twikeep/downloads/24hour"
+      - "https://my-api.redpeacock78.com/v1/twikeep/downloads/1week"
+      - "https://my-api.redpeacock78.com/v1/twikeep/downloads/1month"
+      - "https://my-api.redpeacock78.com/v1/twikeep/downloads/1year"
+      - "https://my-api.redpeacock78.com/v1/twikeep/history"
+    itemsPath: items
+    deduplicationKey: id
+    buildOutputsOnError: true
+    config:
+      skipOnError: true
+
+jobs:
+  post:
+    name: Post twikeep-api updates to the discord
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post
+        run: |
+          if [[ "${{ on.poll.outputs.videoUrl }}" != "" ]]; then
+            name=$(awk -F '/' '{print $NF}' <<<${{ on.poll.outputs.videoUrl }} | sed 's/?.*=.*$//g')
+            link="${{ on.poll.outputs.tweetUrl }}"
+            { 
+              aria2c -q -x5 ${{ on.poll.outputs.videoUrl }} -o ${name}
+              type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}"))
+              if [[ "${{ on.poll.outputs.category }}" == "history" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_HISTORY }}
+              elif [[ "${{ on.poll.outputs.category }}" == "views-24h" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_VIEWS_24H }}
+              elif [[ "${{ on.poll.outputs.category }}" == "views-1w" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_VIEWS_1W }}
+              elif [[ "${{ on.poll.outputs.category }}" == "views-1m" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_VIEWS_1M }}
+              elif [[ "${{ on.poll.outputs.category }}" == "views-1y" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_VIEWS_1Y }}
+              elif [[ "${{ on.poll.outputs.category }}" == "likes-24h" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_LIKES_24H }}
+              elif [[ "${{ on.poll.outputs.category }}" == "likes-1w" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_LIKES_1W }}
+              elif [[ "${{ on.poll.outputs.category }}" == "likes-1m" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_LIKES_1M }}
+              elif [[ "${{ on.poll.outputs.category }}" == "likes-1y" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_LIKES_1Y }}
+              elif [[ "${{ on.poll.outputs.category }}" == "downloads-24h" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_DOWNLOADS_24H }}
+              elif [[ "${{ on.poll.outputs.category }}" == "downloads-1w" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_DOWNLOADS_1W }}
+              elif [[ "${{ on.poll.outputs.category }}" == "downloads-1m" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_DOWNLOADS_1M }}
+              elif [[ "${{ on.poll.outputs.category }}" == "downloads-1y" ]]; then
+                webhook=${{ secrets.DISCORD_TWIKEEP_DOWNLOADS_1Y }}
+              fi
+              if [[ "${type}" =~ "ISO Media" ]]; then
+                curl -s \
+                  -F "file1=@${name}" \
+                  -F "payload_json={\"content\": \"${link}\"}" \
+                  ${webhook}
+              fi
+              rm -rf "./${name}"
+            } || exit 0
+          fi
