@@ -34,10 +34,19 @@ jobs:
 
       - name: Save validated PR metadata
         shell: bash
+        env:
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          DEPENDENCY_NAMES: ${{ steps.metadata.outputs.dependency-names }}
+          PACKAGE_ECOSYSTEM: ${{ steps.metadata.outputs.package-ecosystem }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          printf '%s\n' '${{ steps.metadata.outputs.update-type }}' > dependabot-update-type
-          printf '%s\n' '${{ github.event.pull_request.number }}' > dependabot-pr-number
-          printf '%s\n' '${{ github.event.pull_request.head.sha }}' > dependabot-head-sha
+          set -euo pipefail
+          printf '%s\n' "${UPDATE_TYPE}" > dependabot-update-type
+          printf '%s\n' "${DEPENDENCY_NAMES}" > dependabot-dependency-names
+          printf '%s\n' "${PACKAGE_ECOSYSTEM}" > dependabot-package-ecosystem
+          printf '%s\n' "${PR_NUMBER}" > dependabot-pr-number
+          printf '%s\n' "${HEAD_SHA}" > dependabot-head-sha
 
       - name: Upload validated metadata
         uses: actions/upload-artifact@v7
@@ -45,6 +54,8 @@ jobs:
           name: dependabot-metadata
           path: |
             dependabot-update-type
+            dependabot-dependency-names
+            dependabot-package-ecosystem
             dependabot-pr-number
             dependabot-head-sha
           retention-days: 1
