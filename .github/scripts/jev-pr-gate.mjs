@@ -125,6 +125,12 @@ async function evaluate(state) {
   const payload = {
     model: MODEL,
     state,
+    providerOptions: {
+      gateway: {
+        zeroDataRetention: true,
+        disallowPromptTraining: true,
+      },
+    },
     questions: {
       route: {
         type: 'choice',
