@@ -36,7 +36,7 @@ jobs:
         env:
           DOCKER_TLS_CERTDIR: ""
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Set up WARP
         timeout-minutes: 1
         uses: ./.github/actions/warp-on-actions
