@@ -29,10 +29,11 @@ jobs:
         run: |
           if [[ "${{ on.poll.outputs.videoUrl }}" != "" ]]; then
             name=$(awk -F '/' '{print $NF}' <<<${{ on.poll.outputs.videoUrl }} | sed 's/?.*=.*$//g')
-            link="${{ on.poll.outputs.tweetUrl }}"
+            link="$(sed 's/x.com/fixupx.com/g' <<<${{ on.poll.outputs.tweetUrl }})"
             { 
               aria2c -q -x5 ${{ on.poll.outputs.videoUrl }} -o ${name}
               type=$(awk -F ',' '{print $1}' <<<$(file -b "./${name}"))
+              size=$(awk '{print $1}' <<<$(wc -c "./${name}"))
               if [[ "${{ on.poll.outputs.category }}" == "history" ]]; then
                 webhook=${{ secrets.DISCORD_TWIKEEP_HISTORY }}
               elif [[ "${{ on.poll.outputs.category }}" == "views-24h" ]]; then
@@ -60,11 +61,13 @@ jobs:
               elif [[ "${{ on.poll.outputs.category }}" == "downloads-1y" ]]; then
                 webhook=${{ secrets.DISCORD_TWIKEEP_DOWNLOADS_1Y }}
               fi
-              if [[ "${type}" =~ "ISO Media" ]]; then
-                curl -s \
-                  -F "file1=@${name}" \
-                  -F "payload_json={\"content\": \"${link}\"}" \
-                  ${webhook}
+              if (( size <= 10485760 )); then
+                if [[ "${type}" =~ "ISO Media" ]]; then
+                  curl -s \
+                    -F "file1=@${name}" \
+                    -F "payload_json={\"content\": \"${link}\"}" \
+                    ${webhook} > /dev/null 2>&1
+                fi
               fi
               rm -rf "./${name}"
             } || exit 0
