@@ -80,7 +80,31 @@ jobs:
         if: ${{ success() }}
         env:
           DOCKER_HOST: tcp://localhost:2375
-        run: act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=redpeacock78/act-environment:v1 -P ubuntu-18.04=redpeacock78/act-environment:v1
+        shell: bash
+        run: |
+          image="redpeacock78/act-environment:v1"
+
+          for attempt in 1 2 3; do
+            if docker pull "$image"; then
+              break
+            fi
+
+            if [ "$attempt" -eq 3 ]; then
+              echo "Failed to pull $image after $attempt attempts"
+              exit 1
+            fi
+
+            sleep $((attempt * 5))
+          done
+
+          act \
+            --pull=false \
+            --workflows ./dist/workflows \
+            --secret-file ./dist/.secrets \
+            --eventpath ./dist/event.json \
+            --env-file ./dist/.env \
+            -P ubuntu-latest="$image" \
+            -P ubuntu-18.04="$image"
       - name: Tear down WARP
         if: ${{ always() }}
         timeout-minutes: 1
