@@ -52,10 +52,5 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: dependabot-metadata
-          path: |
-            dependabot-update-type
-            dependabot-dependency-names
-            dependabot-package-ecosystem
-            dependabot-pr-number
-            dependabot-head-sha
+          path: dependabot-metadata/
           retention-days: 1
