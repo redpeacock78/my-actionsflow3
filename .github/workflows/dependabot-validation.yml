@@ -42,15 +42,22 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
           set -euo pipefail
-          printf '%s\n' "${UPDATE_TYPE}" > dependabot-update-type
-          printf '%s\n' "${DEPENDENCY_NAMES}" > dependabot-dependency-names
-          printf '%s\n' "${PACKAGE_ECOSYSTEM}" > dependabot-package-ecosystem
-          printf '%s\n' "${PR_NUMBER}" > dependabot-pr-number
-          printf '%s\n' "${HEAD_SHA}" > dependabot-head-sha
+          mkdir -p dependabot-metadata
+          printf '%s\n' "${UPDATE_TYPE}" > dependabot-metadata/dependabot-update-type
+          printf '%s\n' "${DEPENDENCY_NAMES}" > dependabot-metadata/dependabot-dependency-names
+          printf '%s\n' "${PACKAGE_ECOSYSTEM}" > dependabot-metadata/dependabot-package-ecosystem
+          printf '%s\n' "${PR_NUMBER}" > dependabot-metadata/dependabot-pr-number
+          printf '%s\n' "${HEAD_SHA}" > dependabot-metadata/dependabot-head-sha
+
+          for file in             dependabot-update-type             dependabot-dependency-names             dependabot-package-ecosystem             dependabot-pr-number             dependabot-head-sha
+          do
+            test -s "dependabot-metadata/${file}"
+          done
 
       - name: Upload validated metadata
         uses: actions/upload-artifact@v7
         with:
           name: dependabot-metadata
           path: dependabot-metadata/
+          if-no-files-found: error
           retention-days: 1
