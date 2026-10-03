@@ -49,7 +49,12 @@ jobs:
           printf '%s\n' "${PR_NUMBER}" > dependabot-metadata/dependabot-pr-number
           printf '%s\n' "${HEAD_SHA}" > dependabot-metadata/dependabot-head-sha
 
-          for file in             dependabot-update-type             dependabot-dependency-names             dependabot-package-ecosystem             dependabot-pr-number             dependabot-head-sha
+          for file in \
+            dependabot-update-type \
+            dependabot-dependency-names \
+            dependabot-package-ecosystem \
+            dependabot-pr-number \
+            dependabot-head-sha
           do
             test -s "dependabot-metadata/${file}"
           done
