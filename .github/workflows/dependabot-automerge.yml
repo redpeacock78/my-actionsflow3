@@ -17,6 +17,12 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.actor.login == 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout trusted gate code
+        uses: actions/checkout@v7
+        with:
+          ref: master
+          persist-credentials: false
+
       - name: Download validated metadata
         uses: actions/download-artifact@v8
         with:
@@ -26,22 +32,33 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Checkout trusted gate code
-        uses: actions/checkout@v7
-        with:
-          ref: master
-          persist-credentials: false
-
       - name: Read validated metadata
         shell: bash
         run: |
           set -euo pipefail
+
+          for file in \
+            dependabot-update-type \
+            dependabot-dependency-names \
+            dependabot-package-ecosystem \
+            dependabot-pr-number \
+            dependabot-head-sha
+          do
+            test -s "dependabot-metadata/${file}"
+          done
+
+          UPDATE_TYPE="$(<dependabot-metadata/dependabot-update-type)"
+          DEPENDENCY_NAMES="$(<dependabot-metadata/dependabot-dependency-names)"
+          PACKAGE_ECOSYSTEM="$(<dependabot-metadata/dependabot-package-ecosystem)"
+          PR_NUMBER="$(<dependabot-metadata/dependabot-pr-number)"
+          EXPECTED_HEAD_SHA="$(<dependabot-metadata/dependabot-head-sha)"
+
           {
-            echo "UPDATE_TYPE=$(cat dependabot-metadata/dependabot-update-type)"
-            echo "DEPENDENCY_NAMES=$(cat dependabot-metadata/dependabot-dependency-names)"
-            echo "PACKAGE_ECOSYSTEM=$(cat dependabot-metadata/dependabot-package-ecosystem)"
-            echo "PR_NUMBER=$(cat dependabot-metadata/dependabot-pr-number)"
-            echo "EXPECTED_HEAD_SHA=$(cat dependabot-metadata/dependabot-head-sha)"
+            echo "UPDATE_TYPE=${UPDATE_TYPE}"
+            echo "DEPENDENCY_NAMES=${DEPENDENCY_NAMES}"
+            echo "PACKAGE_ECOSYSTEM=${PACKAGE_ECOSYSTEM}"
+            echo "PR_NUMBER=${PR_NUMBER}"
+            echo "EXPECTED_HEAD_SHA=${EXPECTED_HEAD_SHA}"
           } >> "${GITHUB_ENV}"
 
       - name: Route PR with Jev
